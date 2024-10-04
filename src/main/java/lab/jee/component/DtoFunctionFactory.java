@@ -1,0 +1,37 @@
+package lab.jee.component;
+
+import lab.jee.project.dto.function.ProjectToResponseFunction;
+import lab.jee.project.dto.function.ProjectsToResponseFunction;
+import lab.jee.researcher.dto.function.*;
+
+public class DtoFunctionFactory {
+
+    public ResearcherToResponseFunction researcherToResponse() {
+        return new ResearcherToResponseFunction();
+    }
+
+    public ResearchersToResponseFunction researchersToResponse() {
+        return new ResearchersToResponseFunction();
+    }
+
+    public RequestToResearcherFunction requestToResearcher() {
+        return new RequestToResearcherFunction();
+    }
+
+    public UpdateResearcherPasswordWithRequestFunction updateResearcherPasswordWithRequest() {
+        return new UpdateResearcherPasswordWithRequestFunction();
+    }
+
+    public UpdateResearcherWithRequestFunction updateResearcherWithRequest() {
+        return new UpdateResearcherWithRequestFunction();
+    }
+
+    public ProjectToResponseFunction projectToResponse() {
+        return new ProjectToResponseFunction();
+    }
+
+    public ProjectsToResponseFunction projectsToResponse() {
+        return new ProjectsToResponseFunction();
+    }
+
+}
