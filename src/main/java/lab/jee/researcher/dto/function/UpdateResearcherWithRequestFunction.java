@@ -17,6 +17,8 @@ public class UpdateResearcherWithRequestFunction implements BiFunction<Researche
                 .birthDate(request.getBirthDate())
                 .password(entity.getPassword())
                 .email(request.getEmail())
+                .role(entity.getRole())
+                .avatar(entity.getAvatar())
                 .build();
     }
 }
