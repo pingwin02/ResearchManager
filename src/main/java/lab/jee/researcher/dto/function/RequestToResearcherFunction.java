@@ -15,6 +15,7 @@ public class RequestToResearcherFunction implements BiFunction<UUID, PutResearch
                 .login(request.getLogin())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .role(request.getRole())
                 .birthDate(request.getBirthDate())
                 .password(request.getPassword())
                 .email(request.getEmail())

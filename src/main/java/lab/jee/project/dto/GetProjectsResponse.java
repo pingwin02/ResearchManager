@@ -14,6 +14,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class GetProjectsResponse {
 
+    @Singular
+    private List<Project> projects;
+
     @Getter
     @Setter
     @ToString
@@ -28,7 +31,4 @@ public class GetProjectsResponse {
         private String title;
 
     }
-
-    @Singular
-    private List<Project> projects;
 }

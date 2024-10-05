@@ -15,5 +15,5 @@ public class ProjectToResponseFunction implements Function<Project, GetProjectRe
                 .budget(project.getBudget())
                 .priority(project.getPriority())
                 .build();
-        }
+    }
 }

@@ -1,4 +1,4 @@
-package lab.jee.researcher.dto;
+package lab.jee.experiment.dto;
 
 import lombok.*;
 
@@ -12,10 +12,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class GetResearchersResponse {
+public class GetExperimentsResponse {
 
     @Singular
-    private List<Researcher> researchers;
+    private List<Experiment> experiments;
 
     @Getter
     @Setter
@@ -24,11 +24,11 @@ public class GetResearchersResponse {
     @Builder
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @NoArgsConstructor
-    public static class Researcher {
+    public static class Experiment {
 
         private UUID id;
 
-        private String login;
+        private String description;
 
     }
 }

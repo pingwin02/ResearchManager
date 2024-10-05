@@ -1,4 +1,4 @@
-package lab.jee.project.controller.memory;
+package lab.jee.project.controller.simple;
 
 import lab.jee.component.DtoFunctionFactory;
 import lab.jee.controller.servlet.exception.NotFoundException;

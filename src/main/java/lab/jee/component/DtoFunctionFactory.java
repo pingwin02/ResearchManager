@@ -1,5 +1,7 @@
 package lab.jee.component;
 
+import lab.jee.experiment.dto.function.ExperimentToResponseFunction;
+import lab.jee.experiment.dto.function.ExperimentsToResponseFunction;
 import lab.jee.project.dto.function.ProjectToResponseFunction;
 import lab.jee.project.dto.function.ProjectsToResponseFunction;
 import lab.jee.researcher.dto.function.*;
@@ -32,6 +34,14 @@ public class DtoFunctionFactory {
 
     public ProjectsToResponseFunction projectsToResponse() {
         return new ProjectsToResponseFunction();
+    }
+
+    public ExperimentToResponseFunction experimentToResponse() {
+        return new ExperimentToResponseFunction();
+    }
+
+    public ExperimentsToResponseFunction experimentsToResponse() {
+        return new ExperimentsToResponseFunction();
     }
 
 }

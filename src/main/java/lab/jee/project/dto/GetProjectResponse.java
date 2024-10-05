@@ -1,6 +1,5 @@
 package lab.jee.project.dto;
 
-import lab.jee.project.entity.ProjectPriority;
 import lombok.*;
 
 import java.util.UUID;
@@ -20,5 +19,5 @@ public class GetProjectResponse {
 
     private double budget;
 
-    private ProjectPriority priority;
+    private String priority;
 }

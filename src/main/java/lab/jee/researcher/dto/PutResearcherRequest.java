@@ -19,6 +19,8 @@ public class PutResearcherRequest {
 
     private String lastName;
 
+    private String role;
+
     private LocalDate birthDate;
 
     @ToString.Exclude

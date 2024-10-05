@@ -35,7 +35,7 @@ public class ResearcherInMemoryRepository implements ResearcherRepository {
 
     @Override
     public void delete(UUID id) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        store.deleteResearcher(id);
     }
 
     @Override

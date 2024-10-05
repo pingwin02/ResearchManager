@@ -20,6 +20,6 @@ public class Project implements Serializable {
 
     private double budget;
 
-    private ProjectPriority priority;
+    private String priority;
 
 }

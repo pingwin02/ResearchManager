@@ -93,6 +93,12 @@ public class DataStore {
         }
     }
 
+    public synchronized void deleteResearcher(UUID id) throws IllegalArgumentException {
+        if (!researchers.removeIf(r -> r.getId().equals(id))) {
+            throw new IllegalArgumentException("Researcher with id " + id + " not found");
+        }
+    }
+
     private Experiment cloneWithRelationships(Experiment experiment) throws IllegalArgumentException {
         Experiment cloned = cloningUtility.clone(experiment);
 

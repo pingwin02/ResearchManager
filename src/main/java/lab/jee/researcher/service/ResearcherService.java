@@ -51,9 +51,10 @@ public class ResearcherService {
     }
 
     public void updateAvatar(UUID id, InputStream is) {
-        researcherRepository.find(id).ifPresent(character -> {
+        researcherRepository.find(id).ifPresent(researcher -> {
             try {
-                character.setAvatar(is.readAllBytes());
+                researcher.setAvatar(is.readAllBytes());
+                researcherRepository.update(researcher);
             } catch (IOException e) {
                 throw new IllegalStateException("Failed to read avatar", e);
             }
@@ -61,6 +62,9 @@ public class ResearcherService {
     }
 
     public void deleteAvatar(UUID id) {
-        researcherRepository.find(id).ifPresent(character -> character.setAvatar(null));
+        researcherRepository.find(id).ifPresent(researcher -> {
+            researcher.setAvatar(null);
+            researcherRepository.update(researcher);
+        });
     }
 }

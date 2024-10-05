@@ -23,7 +23,7 @@ public class Researcher implements Serializable {
 
     private String lastName;
 
-    private ResearcherRole role;
+    private String role;
 
     private LocalDate birthDate;
 
