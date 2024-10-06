@@ -34,6 +34,6 @@ public class Researcher implements Serializable {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private byte[] avatar;
+    private String avatarPath;
 
 }

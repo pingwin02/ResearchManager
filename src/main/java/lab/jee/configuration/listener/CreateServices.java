@@ -22,13 +22,14 @@ public class CreateServices implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         DataStore dataSource = (DataStore) event.getServletContext().getAttribute("datasource");
+        String avatarDir = event.getServletContext().getInitParameter("avatarDir");
 
         ResearcherRepository researcherRepository = new ResearcherInMemoryRepository(dataSource);
         ProjectRepository projectRepository = new ProjectInMemoryRepository(dataSource);
         ExperimentRepository experimentRepository = new ExperimentInMemoryRepository(dataSource);
 
         event.getServletContext().setAttribute("researcherService",
-                new ResearcherService(researcherRepository, new Pbkdf2PasswordHash()));
+                new ResearcherService(researcherRepository, new Pbkdf2PasswordHash(), avatarDir));
         event.getServletContext().setAttribute("projectService",
                 new ProjectService(projectRepository));
         event.getServletContext().setAttribute("experimentService",

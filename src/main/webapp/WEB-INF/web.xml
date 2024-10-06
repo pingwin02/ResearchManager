@@ -21,4 +21,9 @@
         <listener-class>lab.jee.configuration.listener.InitializedData</listener-class>
     </listener>
 
+    <context-param>
+        <param-name>avatarDir</param-name>
+        <param-value>avatars</param-value>
+    </context-param>
+
 </web-app>

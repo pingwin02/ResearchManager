@@ -13,7 +13,8 @@ import lab.jee.researcher.entity.ResearcherRole;
 import lab.jee.researcher.service.ResearcherService;
 import lombok.SneakyThrows;
 
-import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -26,11 +27,15 @@ public class InitializedData implements ServletContextListener {
 
     private ExperimentService experimentService;
 
+    private Path avatarDirectory;
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
         researcherService = (ResearcherService) event.getServletContext().getAttribute("researcherService");
         projectService = (ProjectService) event.getServletContext().getAttribute("projectService");
         experimentService = (ExperimentService) event.getServletContext().getAttribute("experimentService");
+        avatarDirectory = Paths.get(System.getProperty("user.dir").split("target")[0],
+                event.getServletContext().getInitParameter("avatarDir"));
 
         init();
     }
@@ -46,7 +51,7 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1975, 6, 4))
                 .email("clayre@jee.com")
                 .password("password")
-                .avatar(getResourceAsByteArray("../avatar/clayre.png"))
+                .avatarPath(avatarDirectory.resolve("b8371a52-2d1a-4af9-a5ba-15934740e3e1.png").toString())
                 .build();
 
         Researcher jonathan = Researcher.builder()
@@ -58,7 +63,7 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1982, 6, 8))
                 .email("jonathan@jee.com")
                 .password("password")
-                .avatar(getResourceAsByteArray("../avatar/jonathan.png"))
+                .avatarPath(avatarDirectory.resolve("88e9ccfb-b924-4988-bcb2-f84e7f7810d7.png").toString())
                 .build();
 
         Researcher jason = Researcher.builder()
@@ -70,7 +75,7 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1983, 2, 18))
                 .email("jason@jee.com")
                 .password("password")
-                .avatar(getResourceAsByteArray("../avatar/jason.png"))
+                .avatarPath(avatarDirectory.resolve("b8c250ba-ac86-4563-a42a-563f7962f353.png").toString())
                 .build();
 
         Researcher madison = Researcher.builder()
@@ -82,7 +87,7 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1997, 6, 27))
                 .email("madison@jee.com")
                 .password("password")
-                .avatar(getResourceAsByteArray("../avatar/madison.png"))
+                .avatarPath(avatarDirectory.resolve("5ba66330-942c-4ae6-9cb7-e2e2f9628b9a.png").toString())
                 .build();
 
         Researcher mark = Researcher.builder()
@@ -94,7 +99,7 @@ public class InitializedData implements ServletContextListener {
                 .birthDate(LocalDate.of(1998, 9, 7))
                 .email("mark@jee.com")
                 .password("password")
-                .avatar(getResourceAsByteArray("../avatar/mark.png"))
+                .avatarPath(avatarDirectory.resolve("d91b3081-fce5-4605-9082-e123b10f7ade.png").toString())
                 .build();
 
         researcherService.create(clayre);
@@ -123,21 +128,5 @@ public class InitializedData implements ServletContextListener {
 
         experimentService.create(experiment);
     }
-
-    /**
-     * @param name name of the desired resource
-     * @return array of bytes read from the resource
-     */
-    @SneakyThrows
-    private byte[] getResourceAsByteArray(String name) {
-        try (InputStream is = this.getClass().getResourceAsStream(name)) {
-            if (is != null) {
-                return is.readAllBytes();
-            } else {
-                throw new IllegalStateException("Unable to get resource %s".formatted(name));
-            }
-        }
-    }
-
 
 }

@@ -21,6 +21,36 @@ Content-Type: application/json
   "email": "john@jee.com"
 }
 
+### Get researcher avatar
+
+GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+
+### Create researcher avatar
+
+PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="john.png"
+
+< src/main/resources/john.png
+--boundary
+
+### Update researcher avatar
+
+PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="madison.png"
+
+< src/main/resources/madison.png
+--boundary
+
+### Delete researcher avatar
+
+DELETE http://localhost:9080/ResearchManager/api/researchers/b8371a52-2d1a-4af9-a5ba-15934740e3e1/avatar
+
 ### Update researcher
 
 PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
@@ -36,43 +66,9 @@ Content-Type: application/json
   "email": "john@jee.com"
 }
 
-### Delete user
+### Delete researcher
 
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
-
-### Get researcher avatar
-
-GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-
-### Delete researcher avatar
-
-DELETE http://localhost:9080/ResearchManager/api/researchers/b8371a52-2d1a-4af9-a5ba-15934740e3e1/avatar
-
-### Create researcher avatar
-
-PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="john.png"
-
-< src/main/resources/lab/jee/configuration/avatar/john.png
---boundary
-
-### Get researcher avatar
-
-GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-
-### Update researcher avatar
-
-PATCH http://localhost:9080/ResearchManager/api/researchers/b8371a52-2d1a-4af9-a5ba-15934740e3e1/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="madison.png"
-
-< src/main/resources/lab/jee/configuration/avatar/madison.png
---boundary
 
 ### Get all projects
 

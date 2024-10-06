@@ -5,7 +5,6 @@ import lab.jee.controller.servlet.exception.BadRequestException;
 import lab.jee.controller.servlet.exception.NotFoundException;
 import lab.jee.researcher.controller.api.ResearcherController;
 import lab.jee.researcher.dto.*;
-import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.service.ResearcherService;
 
 import java.io.InputStream;
@@ -62,6 +61,7 @@ public class ResearcherSimpleController implements ResearcherController {
     @Override
     public void deleteResearcher(UUID id) {
         service.find(id).ifPresentOrElse(researcher -> {
+            deleteResearcherAvatar(id);
             service.delete(id);
         }, () -> {
             throw new NotFoundException();
@@ -70,23 +70,21 @@ public class ResearcherSimpleController implements ResearcherController {
 
     @Override
     public byte[] getResearcherAvatar(UUID id) {
-        return service.find(id).map(Researcher::getAvatar).orElseThrow(NotFoundException::new);
+        return service.find(id).map(researcher ->
+                service.getAvatar(id).orElseThrow(NotFoundException::new)
+        ).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public void updateResearcherAvatar(UUID id, InputStream avatar) {
-        service.find(id).ifPresentOrElse(researcher -> {
-            service.updateAvatar(id, avatar);
-        }, () -> {
+        service.find(id).ifPresentOrElse(researcher -> service.updateAvatar(id, avatar), () -> {
             throw new NotFoundException();
         });
     }
 
     @Override
     public void deleteResearcherAvatar(UUID id) {
-        service.find(id).ifPresentOrElse(researcher -> {
-            service.deleteAvatar(id);
-        }, () -> {
+        service.find(id).ifPresentOrElse(researcher -> service.deleteAvatar(id), () -> {
             throw new NotFoundException();
         });
     }

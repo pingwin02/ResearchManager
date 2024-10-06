@@ -18,7 +18,7 @@ public class UpdateResearcherPasswordWithRequestFunction implements BiFunction<R
                 .password(request.getPassword())
                 .email(entity.getEmail())
                 .role(entity.getRole())
-                .avatar(entity.getAvatar())
+                .avatarPath(entity.getAvatarPath())
                 .build();
     }
 }
