@@ -152,7 +152,7 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.RESEARCHER_AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.RESEARCHER_AVATAR, path);
-                researcherController.updateResearcherAvatar(uuid, request.getPart("avatar").getInputStream());
+                researcherController.createResearcherAvatar(uuid, request.getPart("avatar").getInputStream());
                 return;
             }
         }

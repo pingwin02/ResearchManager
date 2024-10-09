@@ -21,6 +21,8 @@ public interface ResearcherController {
 
     byte[] getResearcherAvatar(UUID id);
 
+    void createResearcherAvatar(UUID id, InputStream inputStream);
+
     void updateResearcherAvatar(UUID id, InputStream avatar);
 
     void deleteResearcherAvatar(UUID id);

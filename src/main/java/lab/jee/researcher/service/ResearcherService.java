@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,18 +71,37 @@ public class ResearcherService {
         });
     }
 
-    public void updateAvatar(UUID id, InputStream is) {
+    public void createAvatar(UUID id, InputStream is) {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
+                if (researcher.getAvatarPath() != null) {
+                    throw new IllegalStateException("Avatar already exists");
+                }
+
                 String fileName = id.toString() + ".png";
                 Path filePath = avatarDirectory.resolve(fileName);
 
-                if (researcher.getAvatarPath() != null) {
-                    Path oldFilePath = avatarDirectory.resolve(researcher.getAvatarPath());
-                    Files.deleteIfExists(oldFilePath);
+                Files.copy(is, filePath);
+
+                researcher.setAvatarPath(fileName);
+                researcherRepository.update(researcher);
+            } catch (IOException e) {
+                throw new IllegalStateException("Failed to save avatar", e);
+            }
+        });
+    }
+
+    public void updateAvatar(UUID id, InputStream is) {
+        researcherRepository.find(id).ifPresent(researcher -> {
+            try {
+                if (researcher.getAvatarPath() == null) {
+                    throw new IllegalStateException("Avatar don't exists");
                 }
 
-                Files.copy(is, filePath);
+                String fileName = id.toString() + ".png";
+                Path filePath = avatarDirectory.resolve(fileName);
+
+                Files.copy(is, filePath, StandardCopyOption.REPLACE_EXISTING);
 
                 researcher.setAvatarPath(fileName);
                 researcherRepository.update(researcher);

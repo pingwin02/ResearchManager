@@ -76,15 +76,40 @@ public class ResearcherSimpleController implements ResearcherController {
     }
 
     @Override
+    public void createResearcherAvatar(UUID id, InputStream avatar) {
+        service.find(id).ifPresentOrElse(researcher -> {
+            try {
+                service.createAvatar(id, avatar);
+            } catch (IllegalStateException ex) {
+                throw new BadRequestException();
+            }
+        }, () -> {
+            throw new NotFoundException();
+        });
+    }
+
+    @Override
     public void updateResearcherAvatar(UUID id, InputStream avatar) {
-        service.find(id).ifPresentOrElse(researcher -> service.updateAvatar(id, avatar), () -> {
+        service.find(id).ifPresentOrElse(researcher -> {
+            try {
+                service.updateAvatar(id, avatar);
+            } catch (IllegalStateException ex) {
+                throw new BadRequestException();
+            }
+        }, () -> {
             throw new NotFoundException();
         });
     }
 
     @Override
     public void deleteResearcherAvatar(UUID id) {
-        service.find(id).ifPresentOrElse(researcher -> service.deleteAvatar(id), () -> {
+        service.find(id).ifPresentOrElse(researcher -> {
+            try {
+                service.deleteAvatar(id);
+            } catch (IllegalStateException ex) {
+                throw new BadRequestException();
+            }
+        }, () -> {
             throw new NotFoundException();
         });
     }
