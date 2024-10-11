@@ -1,9 +1,12 @@
 package lab.jee.datastore.component;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.project.entity.Project;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.serialization.component.CloningUtility;
+import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
 import java.util.HashSet;
@@ -13,6 +16,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Log
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class DataStore {
 
     private final Set<Project> projects = new HashSet<>();
@@ -23,6 +28,7 @@ public class DataStore {
 
     private final CloningUtility cloningUtility;
 
+    @Inject
     public DataStore(CloningUtility cloningUtility) {
         this.cloningUtility = cloningUtility;
     }

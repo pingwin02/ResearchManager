@@ -1,16 +1,21 @@
 package lab.jee.experiment.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
 import lab.jee.project.repository.api.ProjectRepository;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class ExperimentService {
 
     private final ExperimentRepository experimentRepository;
@@ -19,6 +24,7 @@ public class ExperimentService {
 
     private final ResearcherRepository researcherRepository;
 
+    @Inject
     public ExperimentService(ExperimentRepository experimentRepository, ProjectRepository projectRepository, ResearcherRepository researcherRepository) {
         this.experimentRepository = experimentRepository;
         this.projectRepository = projectRepository;

@@ -1,5 +1,7 @@
 package lab.jee.researcher.controller.simple;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import lab.jee.component.DtoFunctionFactory;
 import lab.jee.controller.servlet.exception.BadRequestException;
 import lab.jee.controller.servlet.exception.NotFoundException;
@@ -11,6 +13,7 @@ import lab.jee.researcher.service.ResearcherService;
 import java.io.InputStream;
 import java.util.UUID;
 
+@RequestScoped
 public class ResearcherSimpleController implements ResearcherController {
 
     private final ResearcherService service;
@@ -19,6 +22,7 @@ public class ResearcherSimpleController implements ResearcherController {
 
     private final DtoFunctionFactory factory;
 
+    @Inject
     public ResearcherSimpleController(ResearcherService service, AvatarService avatarService, DtoFunctionFactory factory) {
         this.avatarService = avatarService;
         this.service = service;

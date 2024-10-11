@@ -1,8 +1,11 @@
-package lab.jee.configuration.listener;
+package lab.jee.configuration.observer;
 
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.context.control.RequestContextController;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.service.ExperimentService;
 import lab.jee.project.entity.Project;
@@ -10,38 +13,57 @@ import lab.jee.project.entity.ProjectPriority;
 import lab.jee.project.service.ProjectService;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.entity.ResearcherRole;
+import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
 import lombok.SneakyThrows;
 
-import java.nio.file.Path;
+import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@WebListener
-public class InitializedData implements ServletContextListener {
+@ApplicationScoped
+public class InitializedData {
 
-    private ResearcherService researcherService;
+    private final ResearcherService researcherService;
 
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
-    private ExperimentService experimentService;
+    private final ExperimentService experimentService;
 
-    private Path avatarDirectory;
+    private final AvatarService avatarService;
 
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        researcherService = (ResearcherService) event.getServletContext().getAttribute("researcherService");
-        projectService = (ProjectService) event.getServletContext().getAttribute("projectService");
-        experimentService = (ExperimentService) event.getServletContext().getAttribute("experimentService");
-        avatarDirectory = Paths.get(System.getProperty("user.dir").split("target")[0],
-                event.getServletContext().getInitParameter("avatarDir"));
+    private final RequestContextController requestContextController;
 
+    private final ServletContext servletContext;
+
+    @Inject
+    public InitializedData(
+            ResearcherService researcherService,
+            ProjectService projectService,
+            ExperimentService experimentService,
+            AvatarService avatarService,
+            ServletContext servletContext,
+            RequestContextController requestContextController
+    ) {
+        this.researcherService = researcherService;
+        this.projectService = projectService;
+        this.experimentService = experimentService;
+        this.avatarService = avatarService;
+        this.requestContextController = requestContextController;
+        this.servletContext = servletContext;
+    }
+
+
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         init();
     }
 
     @SneakyThrows
     private void init() {
+        requestContextController.activate();
+
         Researcher clayre = Researcher.builder()
                 .id(UUID.fromString("b8371a52-2d1a-4af9-a5ba-15934740e3e1"))
                 .login("clayre")
@@ -103,6 +125,14 @@ public class InitializedData implements ServletContextListener {
         researcherService.create(madison);
         researcherService.create(mark);
 
+        prepareAvatarDirectory();
+
+        avatarService.createAvatar(clayre.getId(), getResourceAsStream("clayre.png"));
+        avatarService.createAvatar(jonathan.getId(), getResourceAsStream("jonathan.png"));
+        avatarService.createAvatar(jason.getId(), getResourceAsStream("jason.png"));
+        avatarService.createAvatar(madison.getId(), getResourceAsStream("madison.png"));
+        avatarService.createAvatar(mark.getId(), getResourceAsStream("mark.png"));
+
         Project project = Project.builder()
                 .id(UUID.fromString("9ba4a53d-e742-40cb-a613-f609696c5ef9"))
                 .title("Vaccine against COVID-19")
@@ -122,6 +152,27 @@ public class InitializedData implements ServletContextListener {
                 .build();
 
         experimentService.create(experiment);
+
+        requestContextController.deactivate();
+    }
+
+    private void prepareAvatarDirectory() {
+        File avatarDir = new File(Paths.get(servletContext
+                .getRealPath(servletContext
+                        .getInitParameter("avatarDir"))).toString());
+        if (!avatarDir.exists()) {
+            avatarDir.mkdirs();
+        } else {
+            for (File file : avatarDir.listFiles()) {
+                file.delete();
+            }
+        }
+    }
+
+    @SneakyThrows
+    private InputStream getResourceAsStream(String name) {
+        return getClass().getClassLoader().getResourceAsStream(name);
     }
 
 }
+

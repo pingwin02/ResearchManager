@@ -5,22 +5,6 @@
          version="6.0"
          metadata-complete="false">
 
-    <listener>
-        <listener-class>lab.jee.configuration.listener.CreateDataSource</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>lab.jee.configuration.listener.CreateServices</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>lab.jee.configuration.listener.CreateControllers</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>lab.jee.configuration.listener.InitializedData</listener-class>
-    </listener>
-
     <context-param>
         <param-name>avatarDir</param-name>
         <param-value>avatars</param-value>

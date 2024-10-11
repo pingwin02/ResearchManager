@@ -1,5 +1,7 @@
 package lab.jee.researcher.repository.memory;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import lab.jee.datastore.component.DataStore;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
@@ -8,10 +10,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequestScoped
 public class ResearcherInMemoryRepository implements ResearcherRepository {
 
     private final DataStore store;
 
+    @Inject
     public ResearcherInMemoryRepository(DataStore store) {
         this.store = store;
     }

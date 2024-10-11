@@ -1,6 +1,10 @@
 package lab.jee.researcher.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import lab.jee.researcher.repository.api.ResearcherRepository;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,14 +15,20 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class AvatarService {
 
     private final ResearcherRepository researcherRepository;
     private final Path avatarDirectory;
 
-    public AvatarService(ResearcherRepository researcherRepository, String avatarDirectory) {
+    @Inject
+    public AvatarService(ResearcherRepository researcherRepository, ServletContext servletContext) {
         this.researcherRepository = researcherRepository;
-        this.avatarDirectory = Paths.get(System.getProperty("user.dir").split("target")[0], avatarDirectory);
+
+        this.avatarDirectory = Paths.get(servletContext
+                .getRealPath(servletContext
+                        .getInitParameter("avatarDir")));
     }
 
     public Optional<byte[]> getAvatar(UUID id) {

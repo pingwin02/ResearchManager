@@ -1,5 +1,6 @@
 package lab.jee.controller.servlet;
 
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -26,9 +27,16 @@ import java.util.regex.Pattern;
 public class ApiServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();
-    private ExperimentController experimentController;
-    private ProjectController projectController;
-    private ResearcherController researcherController;
+    private final ExperimentController experimentController;
+    private final ProjectController projectController;
+    private final ResearcherController researcherController;
+
+    @Inject
+    public ApiServlet(ExperimentController experimentController, ProjectController projectController, ResearcherController researcherController) {
+        this.experimentController = experimentController;
+        this.projectController = projectController;
+        this.researcherController = researcherController;
+    }
 
     /**
      * Extracts UUID from path using provided pattern. Pattern needs to contain UUID in first regular expression group.
@@ -75,14 +83,6 @@ public class ApiServlet extends HttpServlet {
         } else {
             super.service(request, response);
         }
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        experimentController = (ExperimentController) getServletContext().getAttribute("experimentController");
-        projectController = (ProjectController) getServletContext().getAttribute("projectController");
-        researcherController = (ResearcherController) getServletContext().getAttribute("researcherController");
     }
 
     @SuppressWarnings("RedundantThrows")

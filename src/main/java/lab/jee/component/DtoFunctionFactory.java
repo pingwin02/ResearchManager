@@ -1,11 +1,13 @@
 package lab.jee.component;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import lab.jee.experiment.dto.function.ExperimentToResponseFunction;
 import lab.jee.experiment.dto.function.ExperimentsToResponseFunction;
 import lab.jee.project.dto.function.ProjectToResponseFunction;
 import lab.jee.project.dto.function.ProjectsToResponseFunction;
 import lab.jee.researcher.dto.function.*;
 
+@ApplicationScoped
 public class DtoFunctionFactory {
 
     public ResearcherToResponseFunction researcherToResponse() {

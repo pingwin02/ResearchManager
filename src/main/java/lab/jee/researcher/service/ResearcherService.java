@@ -1,18 +1,24 @@
 package lab.jee.researcher.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lab.jee.crypto.component.Pbkdf2PasswordHash;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class ResearcherService {
 
     private final ResearcherRepository researcherRepository;
     private final Pbkdf2PasswordHash passwordHash;
 
+    @Inject
     public ResearcherService(ResearcherRepository researcherRepository, Pbkdf2PasswordHash passwordHash) {
         this.researcherRepository = researcherRepository;
         this.passwordHash = passwordHash;
