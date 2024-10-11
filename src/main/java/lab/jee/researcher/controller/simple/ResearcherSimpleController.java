@@ -5,6 +5,7 @@ import lab.jee.controller.servlet.exception.BadRequestException;
 import lab.jee.controller.servlet.exception.NotFoundException;
 import lab.jee.researcher.controller.api.ResearcherController;
 import lab.jee.researcher.dto.*;
+import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
 
 import java.io.InputStream;
@@ -14,9 +15,12 @@ public class ResearcherSimpleController implements ResearcherController {
 
     private final ResearcherService service;
 
+    private final AvatarService avatarService;
+
     private final DtoFunctionFactory factory;
 
-    public ResearcherSimpleController(ResearcherService service, DtoFunctionFactory factory) {
+    public ResearcherSimpleController(ResearcherService service, AvatarService avatarService, DtoFunctionFactory factory) {
+        this.avatarService = avatarService;
         this.service = service;
         this.factory = factory;
     }
@@ -61,7 +65,7 @@ public class ResearcherSimpleController implements ResearcherController {
     @Override
     public void deleteResearcher(UUID id) {
         service.find(id).ifPresentOrElse(researcher -> {
-            deleteResearcherAvatar(id);
+            avatarService.deleteAvatar(id);
             service.delete(id);
         }, () -> {
             throw new NotFoundException();
@@ -71,7 +75,7 @@ public class ResearcherSimpleController implements ResearcherController {
     @Override
     public byte[] getResearcherAvatar(UUID id) {
         return service.find(id).map(researcher ->
-                service.getAvatar(id).orElseThrow(NotFoundException::new)
+                avatarService.getAvatar(id).orElseThrow(NotFoundException::new)
         ).orElseThrow(NotFoundException::new);
     }
 
@@ -79,7 +83,7 @@ public class ResearcherSimpleController implements ResearcherController {
     public void createResearcherAvatar(UUID id, InputStream avatar) {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
-                service.createAvatar(id, avatar);
+                avatarService.createAvatar(id, avatar);
             } catch (IllegalStateException ex) {
                 throw new BadRequestException();
             }
@@ -92,7 +96,7 @@ public class ResearcherSimpleController implements ResearcherController {
     public void updateResearcherAvatar(UUID id, InputStream avatar) {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
-                service.updateAvatar(id, avatar);
+                avatarService.updateAvatar(id, avatar);
             } catch (IllegalStateException ex) {
                 throw new BadRequestException();
             }
@@ -105,7 +109,7 @@ public class ResearcherSimpleController implements ResearcherController {
     public void deleteResearcherAvatar(UUID id) {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
-                service.deleteAvatar(id);
+                avatarService.deleteAvatar(id);
             } catch (IllegalStateException ex) {
                 throw new BadRequestException();
             }

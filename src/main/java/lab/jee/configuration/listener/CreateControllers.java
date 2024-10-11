@@ -9,6 +9,7 @@ import lab.jee.experiment.service.ExperimentService;
 import lab.jee.project.controller.simple.ProjectSimpleController;
 import lab.jee.project.service.ProjectService;
 import lab.jee.researcher.controller.simple.ResearcherSimpleController;
+import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
 
 @WebListener
@@ -22,6 +23,8 @@ public class CreateControllers implements ServletContextListener {
                 .getServletContext().getAttribute("projectService");
         ResearcherService researcherService = (ResearcherService) event
                 .getServletContext().getAttribute("researcherService");
+        AvatarService avatarService = (AvatarService) event
+                .getServletContext().getAttribute("avatarService");
 
         event.getServletContext().setAttribute("experimentController",
                 new ExperimentSimpleController(experimentService, new DtoFunctionFactory()));
@@ -30,7 +33,7 @@ public class CreateControllers implements ServletContextListener {
                 new ProjectSimpleController(projectService, new DtoFunctionFactory()));
 
         event.getServletContext().setAttribute("researcherController",
-                new ResearcherSimpleController(researcherService, new DtoFunctionFactory()));
+                new ResearcherSimpleController(researcherService, avatarService, new DtoFunctionFactory()));
 
     }
 }

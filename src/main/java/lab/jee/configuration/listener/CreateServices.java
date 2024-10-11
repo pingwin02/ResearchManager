@@ -13,6 +13,7 @@ import lab.jee.project.repository.memory.ProjectInMemoryRepository;
 import lab.jee.project.service.ProjectService;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lab.jee.researcher.repository.memory.ResearcherInMemoryRepository;
+import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
 
 
@@ -28,8 +29,10 @@ public class CreateServices implements ServletContextListener {
         ProjectRepository projectRepository = new ProjectInMemoryRepository(dataSource);
         ExperimentRepository experimentRepository = new ExperimentInMemoryRepository(dataSource);
 
+        event.getServletContext().setAttribute("avatarService",
+                new AvatarService(researcherRepository, avatarDir));
         event.getServletContext().setAttribute("researcherService",
-                new ResearcherService(researcherRepository, new Pbkdf2PasswordHash(), avatarDir));
+                new ResearcherService(researcherRepository, new Pbkdf2PasswordHash()));
         event.getServletContext().setAttribute("projectService",
                 new ProjectService(projectRepository));
         event.getServletContext().setAttribute("experimentService",
