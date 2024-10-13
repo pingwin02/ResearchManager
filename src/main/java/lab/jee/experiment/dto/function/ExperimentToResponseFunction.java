@@ -14,14 +14,14 @@ public class ExperimentToResponseFunction implements Function<Experiment, GetExp
                 .description(experiment.getDescription())
                 .success(experiment.isSuccess())
                 .dateConducted(experiment.getDateConducted())
-                .project(GetExperimentResponse.Project.builder()
+                .project(experiment.getProject() != null ? GetExperimentResponse.Project.builder()
                         .id(experiment.getProject().getId())
                         .title(experiment.getProject().getTitle())
-                        .build())
-                .researcher(GetExperimentResponse.Researcher.builder()
+                        .build() : null)
+                .researcher(experiment.getResearcher() != null ? GetExperimentResponse.Researcher.builder()
                         .id(experiment.getResearcher().getId())
                         .login(experiment.getResearcher().getLogin())
-                        .build())
+                        .build() : null)
                 .build();
     }
 }

@@ -39,11 +39,11 @@ public class ProjectInMemoryRepository implements ProjectRepository {
 
     @Override
     public void delete(UUID id) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        store.deleteProject(id);
     }
 
     @Override
     public void update(Project entity) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        store.updateProject(entity);
     }
 }

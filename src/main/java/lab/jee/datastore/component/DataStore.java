@@ -47,6 +47,26 @@ public class DataStore {
         projects.add(cloningUtility.clone(project));
     }
 
+    public synchronized void updateProject(Project project) throws IllegalArgumentException {
+        if (projects.removeIf(p -> p.getId().equals(project.getId()))) {
+            projects.add(cloningUtility.clone(project));
+        } else {
+            throw new IllegalArgumentException("Project with id " + project.getId() + " not found");
+        }
+    }
+
+    public synchronized void deleteProject(UUID id) throws IllegalArgumentException {
+        if (!projects.removeIf(p -> p.getId().equals(id))) {
+            throw new IllegalArgumentException("Project with id " + id + " not found");
+        }
+
+        experiments.stream()
+                .filter(e -> e.getProject() != null && e.getProject().getId().equals(id))
+                .forEach(e -> e.setProject(null));
+
+        experiments.removeIf(e -> e.getResearcher() == null && e.getProject() == null);
+    }
+
     public synchronized List<Experiment> findAllExperiments() {
         return experiments.stream()
                 .map(cloningUtility::clone)
@@ -103,6 +123,12 @@ public class DataStore {
         if (!researchers.removeIf(r -> r.getId().equals(id))) {
             throw new IllegalArgumentException("Researcher with id " + id + " not found");
         }
+
+        experiments.stream()
+                .filter(e -> e.getResearcher() != null && e.getResearcher().getId().equals(id))
+                .forEach(e -> e.setResearcher(null));
+
+        experiments.removeIf(e -> e.getResearcher() == null && e.getProject() == null);
     }
 
     private Experiment cloneWithRelationships(Experiment experiment) throws IllegalArgumentException {
