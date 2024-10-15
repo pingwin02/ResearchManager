@@ -32,11 +32,11 @@ public class ProjectService {
     public void create(Project project) {
         projectRepository.create(project);
     }
-    
+
     public void delete(UUID id) {
         projectRepository.delete(id);
     }
-    
+
     public void update(Project project) {
         projectRepository.update(project);
     }

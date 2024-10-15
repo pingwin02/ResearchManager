@@ -78,7 +78,7 @@ public class DataStore {
             throw new IllegalArgumentException("Experiment with id " + experiment.getId() + " already exists");
         }
 
-        experiments.add(cloningUtility.clone(experiment));
+        experiments.add(cloneWithRelationships(experiment));
     }
 
     public synchronized void updateExperiment(Experiment experiment) throws IllegalArgumentException {

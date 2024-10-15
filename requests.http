@@ -85,3 +85,7 @@ GET http://localhost:9080/ResearchManager/api/experiments
 ### Get experiment by id
 
 GET http://localhost:9080/ResearchManager/api/experiments/3180349a-7d53-4200-91dc-3b0b757dca98
+
+### Get experiment by id
+
+GET http://localhost:9080/ResearchManager/api/experiments/3180349a-7d53-4200-91da-3b0b757dca98
