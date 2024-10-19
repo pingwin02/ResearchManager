@@ -53,6 +53,10 @@ public class DataStore {
         } else {
             throw new IllegalArgumentException("Project with id " + project.getId() + " not found");
         }
+
+        experiments.stream()
+                .filter(e -> e.getProject() != null && e.getProject().getId().equals(project.getId()))
+                .forEach(e -> e.setProject(project));
     }
 
     public synchronized void deleteProject(UUID id) throws IllegalArgumentException {
@@ -60,11 +64,7 @@ public class DataStore {
             throw new IllegalArgumentException("Project with id " + id + " not found");
         }
 
-        experiments.stream()
-                .filter(e -> e.getProject() != null && e.getProject().getId().equals(id))
-                .forEach(e -> e.setProject(null));
-
-        experiments.removeIf(e -> e.getResearcher() == null && e.getProject() == null);
+        experiments.removeIf(e -> e.getProject() != null && e.getProject().getId().equals(id));
     }
 
     public synchronized List<Experiment> findAllExperiments() {

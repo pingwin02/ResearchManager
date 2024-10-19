@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{experimentView.id}" required="true"/>
+        <f:viewAction action="#{experimentView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Experiment info</h2></header>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Description:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{experimentView.experiment.description}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Project Title:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{experimentView.experiment.projectTitle}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Date Conducted:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{experimentView.experiment.dateConducted}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Success:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{experimentView.experiment.success ? 'Yes' : 'No'}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{projectView.id}" required="true"/>
+        <f:viewAction action="#{projectView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Project info</h2></header>
+
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Title:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{projectView.project.title}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Budget:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{projectView.project.budget}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Priority:</strong>
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{projectView.project.priority}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <header>
+                    <h3>Associated Experiments</h3>
+                </header>
+                <h:dataTable value="#{projectView.experiments.experiments}" var="experiment"
+                             styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                    <h:column>
+                        <f:facet name="header">Description</f:facet>
+                        <h:outputText value="#{experiment.description}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">View</f:facet>
+                        <h:link outcome="/experiment/experiment_view.xhtml" value="View">
+                            <f:param name="id" value="#{experiment.id}"/>
+                        </h:link>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Edit</f:facet>
+                        <h:link outcome="/experiment/experiment_edit.xhtml" value="Edit">
+                            <f:param name="id" value="#{experiment.id}"/>
+                        </h:link>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:form>
+                            <h:commandButton styleClass="btn btn-danger" value="Delete"
+                                             action="#{experimentList.deleteAction(experiment)}"/>
+                        </h:form>
+                    </h:column>
+
+                    <f:facet name="footer">
+                        <h:link outcome="/experiment/experiment_create__basic.xhtml" styleClass="btn btn-primary"
+                                value="Create New Experiment"/>
+                    </f:facet>
+                </h:dataTable>
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>

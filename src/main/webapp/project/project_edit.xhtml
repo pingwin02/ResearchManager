@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{projectEdit.id}" required="true"/>
+        <f:viewAction action="#{projectEdit.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2>Edit project info</h2></header>
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="title" value="#{projectEdit.project.title}"
+                                         styleClass="form-control"/>
+                            <h:outputLabel for="title" value="Title:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:inputText id="budget" value="#{projectEdit.project.budget}"
+                                         styleClass="form-control" type="number" step="0.01"/>
+                            <h:outputLabel for="budget" value="Budget:" styleClass="form-label"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <div class="form-outline">
+                            <h:outputLabel for="priority" value="Priority:" styleClass="form-label"/>
+                            <h:selectOneMenu id="priority" value="#{projectEdit.project.priority}"
+                                             styleClass="form-select">
+                                <f:selectItem itemValue="HIGH" itemLabel="High"/>
+                                <f:selectItem itemValue="MEDIUM" itemLabel="Medium"/>
+                                <f:selectItem itemValue="LOW" itemLabel="Low"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                                         action="#{projectEdit.saveAction()}"/>
+                    </div>
+                    <div class="col-2 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                    </div>
+                </div>
+            </h:form>
+        </article>
+    </ui:define>
+
+</ui:composition>

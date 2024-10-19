@@ -189,10 +189,10 @@ public class InitializedData {
                 .build();
 
         experimentService.create(experiment2);
-        projectService.update(project_update);
+        //projectService.update(project_update);
 
-        projectService.delete(project.getId());
-        researcherService.delete(clayre.getId());
+        //projectService.delete(project.getId());
+        //researcherService.delete(clayre.getId());
         //experimentService.delete(experiment2.getId());
 
         requestContextController.deactivate();
