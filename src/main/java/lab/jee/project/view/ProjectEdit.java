@@ -49,7 +49,9 @@ public class ProjectEdit implements Serializable {
 
     public String saveAction() {
         service.update(factory.updateProject().apply(service.find(id).orElseThrow(), project));
-        return "project_view?faces-redirect=true&includeViewParams=true";
+        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        return viewId + "?faces-redirect=true&includeViewParams=true";
+
     }
 
 }

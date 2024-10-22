@@ -1,7 +1,7 @@
 package lab.jee.experiment.view;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
-@ViewScoped
+@RequestScoped
 @Named
 public class ExperimentView implements Serializable {
 

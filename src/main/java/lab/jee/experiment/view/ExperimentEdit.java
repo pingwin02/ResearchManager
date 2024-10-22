@@ -61,7 +61,8 @@ public class ExperimentEdit implements Serializable {
 
     public String saveAction() {
         experimentService.update(factory.updateExperiment().apply(experimentService.find(id).orElseThrow(), experiment));
-        return "experiment_view?faces-redirect=true&includeViewParams=true";
+        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        return viewId + "?faces-redirect=true&includeViewParams=true";
     }
 
 }
