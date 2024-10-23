@@ -5,6 +5,8 @@ import lab.jee.experiment.dto.function.ExperimentToResponseFunction;
 import lab.jee.experiment.dto.function.ExperimentsToResponseFunction;
 import lab.jee.project.dto.function.ProjectToResponseFunction;
 import lab.jee.project.dto.function.ProjectsToResponseFunction;
+import lab.jee.project.dto.function.RequestToProjectFunction;
+import lab.jee.project.dto.function.UpdateProjectWithRequestFunction;
 import lab.jee.researcher.dto.function.*;
 
 @ApplicationScoped
@@ -36,6 +38,14 @@ public class DtoFunctionFactory {
 
     public ProjectsToResponseFunction projectsToResponse() {
         return new ProjectsToResponseFunction();
+    }
+
+    public RequestToProjectFunction requestToProject() {
+        return new RequestToProjectFunction();
+    }
+
+    public UpdateProjectWithRequestFunction updateProjectWithRequest() {
+        return new UpdateProjectWithRequestFunction();
     }
 
     public ExperimentToResponseFunction experimentToResponse() {

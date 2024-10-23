@@ -78,6 +78,32 @@ GET http://localhost:9080/ResearchManager/api/projects
 
 GET http://localhost:9080/ResearchManager/api/projects/9ba4a53d-e742-40cb-a613-f609696c5ef9
 
+### Create project
+
+PUT http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Content-Type: application/json
+
+{
+  "title": "Project 1",
+  "budget": 12345.67,
+  "priority": "LOW"
+}
+
+### Update project
+
+PATCH http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Content-Type: application/json
+
+{
+  "title": "First Project",
+  "budget": 76543.21,
+  "priority": "HIGH"
+}
+
+### Delete project
+
+DELETE http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+
 ### Get all experiments
 
 GET http://localhost:9080/ResearchManager/api/experiments
