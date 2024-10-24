@@ -5,7 +5,9 @@ import jakarta.inject.Inject;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
+import lab.jee.project.repository.api.ProjectRepository;
 import lab.jee.researcher.entity.Researcher;
+import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -18,9 +20,18 @@ public class ExperimentService {
 
     private final ExperimentRepository experimentRepository;
 
+    private final ProjectRepository projectRepository;
+
+    private final ResearcherRepository researcherRepository;
+
     @Inject
-    public ExperimentService(ExperimentRepository experimentRepository) {
+    public ExperimentService(
+            ExperimentRepository experimentRepository,
+            ProjectRepository projectRepository,
+            ResearcherRepository researcherRepository) {
         this.experimentRepository = experimentRepository;
+        this.projectRepository = projectRepository;
+        this.researcherRepository = researcherRepository;
     }
 
     public void create(Experiment experiment) {
@@ -39,11 +50,11 @@ public class ExperimentService {
         return experimentRepository.find(id);
     }
 
-    public Optional<Experiment> find(Researcher researcher, UUID id) {
+    public Optional<Experiment> find(UUID id, Researcher researcher) {
         return experimentRepository.findByIdAndResearcher(id, researcher);
     }
 
-    public Optional<Experiment> find(Project project, UUID id) {
+    public Optional<Experiment> find(UUID id, Project project) {
         return experimentRepository.findByIdAndProject(id, project);
     }
 
@@ -51,11 +62,13 @@ public class ExperimentService {
         return experimentRepository.findAll();
     }
 
-    public List<Experiment> findAll(Researcher researcher) {
-        return experimentRepository.findAllByResearcher(researcher);
+    public Optional<List<Experiment>> findAllByResearcher(UUID id) {
+        return researcherRepository.find(id)
+                .map(experimentRepository::findAllByResearcher);
     }
 
-    public List<Experiment> findAll(Project project) {
-        return experimentRepository.findAllByProject(project);
+    public Optional<List<Experiment>> findAllByProject(UUID id) {
+        return projectRepository.find(id)
+                .map(experimentRepository::findAllByProject);
     }
 }

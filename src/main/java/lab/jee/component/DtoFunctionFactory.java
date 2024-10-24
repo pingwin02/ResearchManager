@@ -3,6 +3,8 @@ package lab.jee.component;
 import jakarta.enterprise.context.ApplicationScoped;
 import lab.jee.experiment.dto.function.ExperimentToResponseFunction;
 import lab.jee.experiment.dto.function.ExperimentsToResponseFunction;
+import lab.jee.experiment.dto.function.RequestToExperimentFunction;
+import lab.jee.experiment.dto.function.UpdateExperimentWithRequestFunction;
 import lab.jee.project.dto.function.ProjectToResponseFunction;
 import lab.jee.project.dto.function.ProjectsToResponseFunction;
 import lab.jee.project.dto.function.RequestToProjectFunction;
@@ -54,6 +56,14 @@ public class DtoFunctionFactory {
 
     public ExperimentsToResponseFunction experimentsToResponse() {
         return new ExperimentsToResponseFunction();
+    }
+
+    public RequestToExperimentFunction requestToExperiment() {
+        return new RequestToExperimentFunction();
+    }
+
+    public UpdateExperimentWithRequestFunction updateExperimentWithRequest() {
+        return new UpdateExperimentWithRequestFunction();
     }
 
 }

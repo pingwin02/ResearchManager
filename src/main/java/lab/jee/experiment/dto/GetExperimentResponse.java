@@ -15,10 +15,15 @@ import java.util.UUID;
 public class GetExperimentResponse {
 
     private UUID id;
+
     private String description;
+
     private boolean success;
+
     private LocalDate dateConducted;
+
     private Project project;
+
     private Researcher researcher;
 
     @Getter

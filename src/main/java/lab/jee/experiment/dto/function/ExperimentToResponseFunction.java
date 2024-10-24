@@ -8,19 +8,19 @@ import java.util.function.Function;
 public class ExperimentToResponseFunction implements Function<Experiment, GetExperimentResponse> {
 
     @Override
-    public GetExperimentResponse apply(Experiment experiment) {
+    public GetExperimentResponse apply(Experiment e) {
         return GetExperimentResponse.builder()
-                .id(experiment.getId())
-                .description(experiment.getDescription())
-                .success(experiment.isSuccess())
-                .dateConducted(experiment.getDateConducted())
-                .project(experiment.getProject() != null ? GetExperimentResponse.Project.builder()
-                        .id(experiment.getProject().getId())
-                        .title(experiment.getProject().getTitle())
+                .id(e.getId())
+                .description(e.getDescription())
+                .success(e.isSuccess())
+                .dateConducted(e.getDateConducted())
+                .project(e.getProject() != null ? GetExperimentResponse.Project.builder()
+                        .id(e.getProject().getId())
+                        .title(e.getProject().getTitle())
                         .build() : null)
-                .researcher(experiment.getResearcher() != null ? GetExperimentResponse.Researcher.builder()
-                        .id(experiment.getResearcher().getId())
-                        .login(experiment.getResearcher().getLogin())
+                .researcher(e.getResearcher() != null ? GetExperimentResponse.Researcher.builder()
+                        .id(e.getResearcher().getId())
+                        .login(e.getResearcher().getLogin())
                         .build() : null)
                 .build();
     }

@@ -23,34 +23,6 @@ public class ExperimentInMemoryRepository implements ExperimentRepository {
     }
 
     @Override
-    public Optional<Experiment> findByIdAndResearcher(UUID id, Researcher researcher) {
-        return store.findAllExperiments().stream()
-                .filter(experiment -> experiment.getId().equals(id) && experiment.getResearcher().equals(researcher))
-                .findFirst();
-    }
-
-    @Override
-    public Optional<Experiment> findByIdAndProject(UUID id, Project project) {
-        return store.findAllExperiments().stream()
-                .filter(experiment -> experiment.getId().equals(id) && experiment.getProject().equals(project))
-                .findFirst();
-    }
-
-    @Override
-    public List<Experiment> findAllByResearcher(Researcher researcher) {
-        return store.findAllExperiments().stream()
-                .filter(experiment -> experiment.getResearcher().equals(researcher))
-                .toList();
-    }
-
-    @Override
-    public List<Experiment> findAllByProject(Project project) {
-        return store.findAllExperiments().stream()
-                .filter(experiment -> experiment.getProject().equals(project))
-                .toList();
-    }
-
-    @Override
     public Optional<Experiment> find(UUID id) {
         return store.findAllExperiments().stream()
                 .filter(experiment -> experiment.getId().equals(id))
@@ -75,5 +47,35 @@ public class ExperimentInMemoryRepository implements ExperimentRepository {
     @Override
     public void update(Experiment entity) {
         store.updateExperiment(entity);
+    }
+
+    @Override
+    public Optional<Experiment> findByIdAndResearcher(UUID id, Researcher researcher) {
+        return store.findAllExperiments().stream()
+                .filter(experiment -> experiment.getId().equals(id))
+                .filter(experiment -> experiment.getResearcher().getId().equals(researcher.getId()))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<Experiment> findByIdAndProject(UUID id, Project project) {
+        return store.findAllExperiments().stream()
+                .filter(experiment -> experiment.getId().equals(id))
+                .filter(experiment -> experiment.getProject().getId().equals(project.getId()))
+                .findFirst();
+    }
+
+    @Override
+    public List<Experiment> findAllByResearcher(Researcher researcher) {
+        return store.findAllExperiments().stream()
+                .filter(experiment -> experiment.getResearcher().getId().equals(researcher.getId()))
+                .toList();
+    }
+
+    @Override
+    public List<Experiment> findAllByProject(Project project) {
+        return store.findAllExperiments().stream()
+                .filter(experiment -> experiment.getProject().getId().equals(project.getId()))
+                .toList();
     }
 }

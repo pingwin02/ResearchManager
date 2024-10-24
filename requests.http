@@ -2,10 +2,6 @@
 
 GET http://localhost:9080/ResearchManager/api/researchers
 
-### Get researcher by id
-
-GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
-
 ### Create researcher
 
 PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
@@ -21,35 +17,9 @@ Content-Type: application/json
   "email": "john@jee.com"
 }
 
-### Get researcher avatar
+### Get researcher by id
 
-GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-
-### Create researcher avatar
-
-PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="john.png"
-
-< src/main/resources/john.png
---boundary
-
-### Update researcher avatar
-
-PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="avatar"; filename="madison.png"
-
-< src/main/resources/madison.png
---boundary
-
-### Delete researcher avatar
-
-DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 
 ### Update researcher
 
@@ -66,6 +36,36 @@ Content-Type: application/json
   "email": "john@jee.com"
 }
 
+### Create researcher avatar
+
+PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="john.png"
+
+< src/main/resources/john.png
+--boundary
+
+### Get researcher avatar
+
+GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+
+### Update researcher avatar
+
+PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="madison.png"
+
+< src/main/resources/madison.png
+--boundary
+
+### Delete researcher avatar
+
+DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+
 ### Delete researcher
 
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
@@ -73,10 +73,6 @@ DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-
 ### Get all projects
 
 GET http://localhost:9080/ResearchManager/api/projects
-
-### Get project by id
-
-GET http://localhost:9080/ResearchManager/api/projects/9ba4a53d-e742-40cb-a613-f609696c5ef9
 
 ### Create project
 
@@ -88,6 +84,10 @@ Content-Type: application/json
   "budget": 12345.67,
   "priority": "LOW"
 }
+
+### Get project by id
+
+GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
 
 ### Update project
 
@@ -108,10 +108,36 @@ DELETE http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-928
 
 GET http://localhost:9080/ResearchManager/api/experiments
 
+### Create experiment
+
+PUT http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Content-Type: application/json
+
+{
+  "description": "Description 1",
+  "success": true,
+  "dateConducted": "2024-10-24"
+}
+
 ### Get experiment by id
 
-GET http://localhost:9080/ResearchManager/api/experiments/3180349a-7d53-4200-91dc-3b0b757dca98
+GET http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
 
-### Get experiment by id
+### Get project experiments
 
-GET http://localhost:9080/ResearchManager/api/experiments/3180349a-7d53-4200-91da-3b0b757dca98
+GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments
+
+### Update experiment
+
+PATCH http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Content-Type: application/json
+
+{
+  "description": "First Description",
+  "success": false,
+  "dateConducted": "2024-10-25"
+}
+
+### Delete experiment
+
+DELETE http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e

@@ -147,13 +147,6 @@ public class InitializedData {
                 .priority(ProjectPriority.LOW)
                 .build();
 
-        Project project_update = Project.builder()
-                .id(UUID.fromString("9ba4a53d-e742-40aa-a613-f609696c5ef9"))
-                .title("Vaccine against Polio")
-                .budget(100_000_000)
-                .priority(ProjectPriority.HIGH)
-                .build();
-
         projectService.create(project);
         projectService.create(project2);
 
@@ -166,21 +159,8 @@ public class InitializedData {
                 .researcher(clayre)
                 .build();
 
-        experimentService.create(experiment);
-
-        Experiment experiment_update = Experiment.builder()
-                .id(UUID.fromString("3180349a-7d53-4200-91dc-3b0b757dca98"))
-                .description("Focused on the development of a cure against Polio")
-                .success(false)
-                .dateConducted(LocalDate.of(2020, 2, 3))
-                .project(project)
-                .researcher(clayre)
-                .build();
-
-        experimentService.update(experiment_update);
-
         Experiment experiment2 = Experiment.builder()
-                .id(UUID.fromString("3180349a-7d53-4200-91da-3b0b757dca98"))
+                .id(UUID.fromString("9db7491e-e2e0-4bad-8068-1af618d510f4"))
                 .description("Some experiment")
                 .success(true)
                 .dateConducted(LocalDate.of(2024, 3, 5))
@@ -188,12 +168,8 @@ public class InitializedData {
                 .researcher(clayre)
                 .build();
 
+        experimentService.create(experiment);
         experimentService.create(experiment2);
-        //projectService.update(project_update);
-
-        //projectService.delete(project.getId());
-        //researcherService.delete(clayre.getId());
-        //experimentService.delete(experiment2.getId());
 
         requestContextController.deactivate();
     }

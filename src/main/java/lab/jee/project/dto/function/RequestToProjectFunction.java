@@ -9,12 +9,12 @@ import java.util.function.BiFunction;
 public class RequestToProjectFunction implements BiFunction<UUID, PutProjectRequest, Project> {
 
     @Override
-    public Project apply(UUID id, PutProjectRequest putProjectRequest) {
+    public Project apply(UUID id, PutProjectRequest r) {
         return Project.builder()
                 .id(id)
-                .title(putProjectRequest.getTitle())
-                .budget(putProjectRequest.getBudget())
-                .priority(putProjectRequest.getPriority())
+                .title(r.getTitle())
+                .budget(r.getBudget())
+                .priority(r.getPriority())
                 .build();
     }
 }

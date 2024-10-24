@@ -8,12 +8,12 @@ import java.util.function.Function;
 public class ProjectToResponseFunction implements Function<Project, GetProjectResponse> {
 
     @Override
-    public GetProjectResponse apply(Project project) {
+    public GetProjectResponse apply(Project p) {
         return GetProjectResponse.builder()
-                .id(project.getId())
-                .title(project.getTitle())
-                .budget(project.getBudget())
-                .priority(project.getPriority())
+                .id(p.getId())
+                .title(p.getTitle())
+                .budget(p.getBudget())
+                .priority(p.getPriority())
                 .build();
     }
 }

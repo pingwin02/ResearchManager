@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface ProjectController {
 
     @GET
-    @Path("/project/{id}")
+    @Path("/projects/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     GetProjectResponse getProject(@PathParam("id") UUID id);
 
@@ -23,16 +23,16 @@ public interface ProjectController {
     GetProjectsResponse getProjects();
 
     @PUT
-    @Path("/project/{id}")
+    @Path("/projects/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     void createProject(@PathParam("id") UUID id, PutProjectRequest request);
 
     @PATCH
-    @Path("/project/{id}")
+    @Path("/projects/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     void updateProject(@PathParam("id") UUID id, PatchProjectRequest request);
 
     @DELETE
-    @Path("/project/{id}")
+    @Path("/projects/{id}")
     void deleteProject(@PathParam("id") UUID id);
 }
