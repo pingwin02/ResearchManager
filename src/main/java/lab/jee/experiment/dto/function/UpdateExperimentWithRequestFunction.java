@@ -2,21 +2,19 @@ package lab.jee.experiment.dto.function;
 
 import lab.jee.experiment.dto.PatchExperimentRequest;
 import lab.jee.experiment.entity.Experiment;
-import lab.jee.function.api.TriFunction;
-import lab.jee.project.entity.Project;
 
-import java.util.UUID;
+import java.util.function.BiFunction;
 
-public class UpdateExperimentWithRequestFunction implements TriFunction<UUID, UUID, PatchExperimentRequest, Experiment> {
+public class UpdateExperimentWithRequestFunction implements BiFunction<Experiment, PatchExperimentRequest, Experiment> {
 
     @Override
-    public Experiment apply(UUID id, UUID projectId, PatchExperimentRequest r) {
+    public Experiment apply(Experiment e, PatchExperimentRequest r) {
         return Experiment.builder()
-                .id(id)
+                .id(e.getId())
                 .description(r.getDescription())
                 .success(r.isSuccess())
                 .dateConducted(r.getDateConducted())
-                .project(Project.builder().id(projectId).build())
+                .project(e.getProject())
                 .build();
     }
 }

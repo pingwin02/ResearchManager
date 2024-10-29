@@ -131,7 +131,7 @@ public class ResearcherRestController implements ResearcherController {
     public void updateResearcherAvatar(UUID id, InputStream avatar) {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
-                avatarService.updateAvatar(id, avatar);
+                avatarService.updateAvatar(researcher.getId(), avatar);
             } catch (IllegalStateException ex) {
                 throw new BadRequestException();
             }
@@ -144,7 +144,7 @@ public class ResearcherRestController implements ResearcherController {
     public void deleteResearcherAvatar(UUID id) {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
-                avatarService.deleteAvatar(id);
+                avatarService.deleteAvatar(researcher.getId());
             } catch (IllegalStateException ex) {
                 throw new BadRequestException();
             }

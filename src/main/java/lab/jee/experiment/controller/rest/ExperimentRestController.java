@@ -15,7 +15,6 @@ import lab.jee.experiment.dto.GetExperimentsResponse;
 import lab.jee.experiment.dto.PatchExperimentRequest;
 import lab.jee.experiment.dto.PutExperimentRequest;
 import lab.jee.experiment.service.ExperimentService;
-import lab.jee.project.entity.Project;
 
 import java.util.UUID;
 
@@ -86,9 +85,9 @@ public class ExperimentRestController implements ExperimentController {
     }
 
     @Override
-    public void updateExperiment(UUID projectId, UUID experimentId, PatchExperimentRequest request) {
-        service.find(experimentId, Project.builder().id(projectId).build()).ifPresentOrElse(
-                experiment -> service.update(factory.updateExperimentWithRequest().apply(experimentId, projectId, request)),
+    public void updateExperiment(UUID id, PatchExperimentRequest request) {
+        service.find(id).ifPresentOrElse(
+                experiment -> service.update(factory.updateExperimentWithRequest().apply(experiment, request)),
                 () -> {
                     throw new NotFoundException();
                 }
@@ -98,7 +97,7 @@ public class ExperimentRestController implements ExperimentController {
     @Override
     public void deleteExperiment(UUID id) {
         service.find(id).ifPresentOrElse(
-                experiment -> service.delete(id),
+                experiment -> service.delete(experiment.getId()),
                 () -> {
                     throw new NotFoundException();
                 }

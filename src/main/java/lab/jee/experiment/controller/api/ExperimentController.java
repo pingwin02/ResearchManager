@@ -42,11 +42,10 @@ public interface ExperimentController {
     );
 
     @PATCH
-    @Path("/projects/{projectId}/experiments/{experimentId}")
+    @Path("/experiments/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     void updateExperiment(
-            @PathParam("projectId") UUID projectId,
-            @PathParam("experimentId") UUID experimentId,
+            @PathParam("id") UUID id,
             PatchExperimentRequest request
     );
 

@@ -129,7 +129,7 @@ GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-d
 
 ### Update experiment
 
-PATCH http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+PATCH http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
 Content-Type: application/json
 
 {

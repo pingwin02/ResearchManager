@@ -73,7 +73,7 @@ public class ProjectRestController implements ProjectController {
     @Override
     public void updateProject(UUID id, PatchProjectRequest request) {
         service.find(id).ifPresentOrElse(
-                project -> service.update(factory.updateProjectWithRequest().apply(id, request)),
+                project -> service.update(factory.updateProjectWithRequest().apply(project.getId(), request)),
                 () -> {
                     throw new NotFoundException();
                 }
@@ -84,7 +84,7 @@ public class ProjectRestController implements ProjectController {
     @Override
     public void deleteProject(UUID id) {
         service.find(id).ifPresentOrElse(
-                project -> service.delete(id),
+                project -> service.delete(project.getId()),
                 () -> {
                     throw new NotFoundException();
                 }
