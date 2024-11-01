@@ -2,6 +2,7 @@ package lab.jee.project.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lab.jee.project.entity.Project;
 import lab.jee.project.repository.api.ProjectRepository;
 import lombok.NoArgsConstructor;
@@ -29,15 +30,22 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
+    @Transactional
     public void create(Project project) {
+        if (projectRepository.find(project.getId()).isPresent()) {
+            throw new IllegalArgumentException("Project already exists");
+        }
         projectRepository.create(project);
     }
 
+    @Transactional
+    public void update(Project project) {
+        projectRepository.update(project);
+    }
+
+    @Transactional
     public void delete(UUID id) {
         projectRepository.delete(id);
     }
 
-    public void update(Project project) {
-        projectRepository.update(project);
-    }
 }

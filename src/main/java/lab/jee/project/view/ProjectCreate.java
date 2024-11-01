@@ -9,14 +9,12 @@ import lab.jee.project.model.ProjectCreateModel;
 import lab.jee.project.service.ProjectService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 @ConversationScoped
 @Named
-@Log
 @NoArgsConstructor(force = true)
 public class ProjectCreate implements Serializable {
 

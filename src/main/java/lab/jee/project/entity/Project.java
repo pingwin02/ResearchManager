@@ -1,8 +1,11 @@
 package lab.jee.project.entity;
 
+import jakarta.persistence.*;
+import lab.jee.experiment.entity.Experiment;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -12,8 +15,11 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@Entity
+@Table(name = "projects")
 public class Project implements Serializable {
 
+    @Id
     private UUID id;
 
     private String title;
@@ -21,5 +27,10 @@ public class Project implements Serializable {
     private double budget;
 
     private String priority;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Experiment> experiments;
 
 }

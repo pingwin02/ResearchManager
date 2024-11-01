@@ -2,6 +2,7 @@ package lab.jee.researcher.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lab.jee.crypto.component.Pbkdf2PasswordHash;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
@@ -36,7 +37,11 @@ public class ResearcherService {
         return researcherRepository.findAll();
     }
 
+    @Transactional
     public void create(Researcher researcher) {
+        if (researcherRepository.findByLogin(researcher.getLogin()).isPresent()) {
+            throw new IllegalArgumentException("Researcher already exists");
+        }
         researcher.setPassword(passwordHash.generate(researcher.getPassword().toCharArray()));
         researcherRepository.create(researcher);
     }
@@ -45,10 +50,12 @@ public class ResearcherService {
         return find(login).map(researcher -> passwordHash.verify(password.toCharArray(), researcher.getPassword())).orElse(false);
     }
 
+    @Transactional
     public void update(Researcher researcher) {
         researcherRepository.update(researcher);
     }
 
+    @Transactional
     public void delete(UUID id) {
         researcherRepository.delete(id);
     }

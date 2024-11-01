@@ -15,10 +15,13 @@ import lab.jee.experiment.dto.GetExperimentsResponse;
 import lab.jee.experiment.dto.PatchExperimentRequest;
 import lab.jee.experiment.dto.PutExperimentRequest;
 import lab.jee.experiment.service.ExperimentService;
+import lombok.extern.java.Log;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class ExperimentRestController implements ExperimentController {
 
     private final ExperimentService service;
@@ -80,6 +83,7 @@ public class ExperimentRestController implements ExperimentController {
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
         } catch (IllegalArgumentException ex) {
+            log.log(Level.WARNING, ex.getMessage(), ex);
             throw new BadRequestException(ex);
         }
     }

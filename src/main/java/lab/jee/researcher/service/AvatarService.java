@@ -3,6 +3,7 @@ package lab.jee.researcher.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
+import jakarta.transaction.Transactional;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
@@ -45,6 +46,7 @@ public class AvatarService {
         });
     }
 
+    @Transactional
     public void createAvatar(UUID id, InputStream is) {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
@@ -65,6 +67,7 @@ public class AvatarService {
         });
     }
 
+    @Transactional
     public void updateAvatar(UUID id, InputStream is) {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
@@ -85,6 +88,7 @@ public class AvatarService {
         });
     }
 
+    @Transactional
     public void deleteAvatar(UUID id) {
         researcherRepository.find(id).ifPresent(researcher -> {
             if (researcher.getAvatarPath() != null) {

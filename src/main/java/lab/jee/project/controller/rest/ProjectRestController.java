@@ -15,10 +15,13 @@ import lab.jee.project.dto.GetProjectsResponse;
 import lab.jee.project.dto.PatchProjectRequest;
 import lab.jee.project.dto.PutProjectRequest;
 import lab.jee.project.service.ProjectService;
+import lombok.extern.java.Log;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class ProjectRestController implements ProjectController {
 
     private final ProjectService service;
@@ -66,6 +69,7 @@ public class ProjectRestController implements ProjectController {
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
         } catch (IllegalArgumentException ex) {
+            log.log(Level.WARNING, ex.getMessage(), ex);
             throw new BadRequestException(ex);
         }
     }

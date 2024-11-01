@@ -2,6 +2,7 @@ package lab.jee.experiment.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
@@ -34,14 +35,27 @@ public class ExperimentService {
         this.researcherRepository = researcherRepository;
     }
 
+    @Transactional
     public void create(Experiment experiment) {
+        if (experimentRepository.find(experiment.getId()).isPresent()) {
+            throw new IllegalArgumentException("Experiment already exists");
+        }
+        if (projectRepository.find(experiment.getProject().getId()).isEmpty()) {
+            throw new IllegalArgumentException("Project does not exist");
+        }
+
         experimentRepository.create(experiment);
+
+        projectRepository.find(experiment.getProject().getId())
+                .ifPresent(project -> project.getExperiments().add(experiment));
     }
 
+    @Transactional
     public void update(Experiment experiment) {
         experimentRepository.update(experiment);
     }
 
+    @Transactional
     public void delete(UUID id) {
         experimentRepository.delete(id);
     }

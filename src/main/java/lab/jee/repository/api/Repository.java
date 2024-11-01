@@ -11,9 +11,9 @@ public interface Repository<E, K> {
 
     void create(E entity);
 
-    void delete(K id);
-
     void update(E entity);
+
+    void delete(K id);
 
 }
 

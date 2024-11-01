@@ -13,11 +13,14 @@ import lab.jee.researcher.controller.api.ResearcherController;
 import lab.jee.researcher.dto.*;
 import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
+import lombok.extern.java.Log;
 
 import java.io.InputStream;
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class ResearcherRestController implements ResearcherController {
 
     private final ResearcherService service;
@@ -78,6 +81,7 @@ public class ResearcherRestController implements ResearcherController {
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
         } catch (IllegalArgumentException ex) {
+            log.log(Level.WARNING, ex.getMessage(), ex);
             throw new BadRequestException(ex);
         }
     }

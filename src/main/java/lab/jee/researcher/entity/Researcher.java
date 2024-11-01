@@ -1,5 +1,9 @@
 package lab.jee.researcher.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,8 +17,11 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@Entity
+@Table(name = "researchers")
 public class Researcher implements Serializable {
 
+    @Id
     private UUID id;
 
     private String login;
@@ -30,6 +37,7 @@ public class Researcher implements Serializable {
     @ToString.Exclude
     private String password;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     @ToString.Exclude
