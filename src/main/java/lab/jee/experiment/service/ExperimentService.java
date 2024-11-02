@@ -45,9 +45,6 @@ public class ExperimentService {
         }
 
         experimentRepository.create(experiment);
-
-        projectRepository.find(experiment.getProject().getId())
-                .ifPresent(project -> project.getExperiments().add(experiment));
     }
 
     @Transactional
