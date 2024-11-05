@@ -24,4 +24,6 @@ public class ExperimentModel {
 
     private String projectTitle;
 
+    private String researcherLogin;
+
 }

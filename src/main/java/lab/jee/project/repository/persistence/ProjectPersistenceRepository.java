@@ -42,7 +42,7 @@ public class ProjectPersistenceRepository implements ProjectRepository {
 
     @Override
     public void delete(UUID id) {
-        Object entity = em.find(Project.class, id);
+        Project entity = em.find(Project.class, id);
         em.refresh(entity);
         em.remove(entity);
     }

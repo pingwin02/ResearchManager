@@ -9,12 +9,12 @@ import java.util.function.Function;
 public class ModelToProjectFunction implements Function<ProjectCreateModel, Project>, Serializable {
 
     @Override
-    public Project apply(ProjectCreateModel projectModel) {
+    public Project apply(ProjectCreateModel m) {
         return Project.builder()
-                .id(projectModel.getId())
-                .title(projectModel.getTitle())
-                .budget(projectModel.getBudget())
-                .priority(projectModel.getPriority())
+                .id(m.getId())
+                .title(m.getTitle())
+                .budget(m.getBudget())
+                .priority(m.getPriority())
                 .build();
     }
 }

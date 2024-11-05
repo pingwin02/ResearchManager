@@ -3,18 +3,18 @@ package lab.jee.project.dto.function;
 import lab.jee.project.dto.PatchProjectRequest;
 import lab.jee.project.entity.Project;
 
-import java.util.UUID;
 import java.util.function.BiFunction;
 
-public class UpdateProjectWithRequestFunction implements BiFunction<UUID, PatchProjectRequest, Project> {
+public class UpdateProjectWithRequestFunction implements BiFunction<Project, PatchProjectRequest, Project> {
 
     @Override
-    public Project apply(UUID id, PatchProjectRequest r) {
+    public Project apply(Project p, PatchProjectRequest r) {
         return Project.builder()
-                .id(id)
-                .title(r.getTitle())
+                .id(p.getId())
+                .title(r.getTitle() != null ? r.getTitle() : p.getTitle())
                 .budget(r.getBudget())
-                .priority(r.getPriority())
+                .priority(r.getPriority() != null ? r.getPriority() : p.getPriority())
+                .experiments(p.getExperiments())
                 .build();
     }
 }

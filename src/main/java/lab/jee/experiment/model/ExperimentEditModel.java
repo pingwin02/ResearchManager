@@ -1,6 +1,5 @@
 package lab.jee.experiment.model;
 
-import lab.jee.project.model.ProjectModel;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -19,7 +18,5 @@ public class ExperimentEditModel {
     private boolean success;
 
     private LocalDate dateConducted;
-
-    private ProjectModel project;
 
 }

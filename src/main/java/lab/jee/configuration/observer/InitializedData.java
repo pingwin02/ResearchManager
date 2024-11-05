@@ -164,7 +164,7 @@ public class InitializedData {
             Experiment experiment2 = Experiment.builder()
                     .id(UUID.fromString("9db7491e-e2e0-4bad-8068-1af618d510f4"))
                     .description("Some experiment")
-                    .success(true)
+                    .success(false)
                     .dateConducted(LocalDate.of(2024, 3, 5))
                     .project(project2)
                     .researcher(clayre)

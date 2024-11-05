@@ -21,19 +21,19 @@ Content-Type: application/json
 
 GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 
+### Get researcher experiments
+
+GET http://localhost:9080/ResearchManager/api/researchers/b8371a52-2d1a-4af9-a5ba-15934740e3e1/experiments
+
 ### Update researcher
 
 PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 Content-Type: application/json
 
 {
-  "login": "john",
-  "firstName": "John",
+  "firstName": "James",
   "lastName": "Lennon",
-  "role": "LEAD_RESEARCHER",
-  "birthDate": "1985-05-05",
-  "password": "password",
-  "email": "john@jee.com"
+  "birthDate": "1985-05-05"
 }
 
 ### Create researcher avatar
@@ -116,7 +116,8 @@ Content-Type: application/json
 {
   "description": "Description 1",
   "success": true,
-  "dateConducted": "2024-10-24"
+  "dateConducted": "2024-10-24",
+  "researcherId": "b8371a52-2d1a-4af9-a5ba-15934740e3e1"
 }
 
 ### Get experiment by id

@@ -1,13 +1,12 @@
 package lab.jee.researcher.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lab.jee.experiment.entity.Experiment;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -24,6 +23,7 @@ public class Researcher implements Serializable {
     @Id
     private UUID id;
 
+    @Column(nullable = false, unique = true)
     private String login;
 
     private String firstName;
@@ -43,5 +43,10 @@ public class Researcher implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private String avatarPath;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL)
+    private List<Experiment> experiments;
 
 }

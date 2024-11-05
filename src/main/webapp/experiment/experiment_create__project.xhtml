@@ -30,7 +30,6 @@
                             <legend class="form-label fs-6">Project:</legend>
                             <h:selectOneMenu id="projectMenu" value="#{experimentCreate.experiment.project}"
                                              styleClass="form-select">
-                                <f:selectItem itemValue="#{null}" itemLabel="No Project"/>
                                 <f:selectItems value="#{experimentCreate.projects}" var="project" itemValue="#{project}"
                                                itemLabel="#{project.title}"/>
                             </h:selectOneMenu>

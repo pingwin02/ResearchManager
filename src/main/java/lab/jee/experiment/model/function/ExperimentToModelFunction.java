@@ -9,12 +9,13 @@ import java.util.function.Function;
 public class ExperimentToModelFunction implements Function<Experiment, ExperimentModel>, Serializable {
 
     @Override
-    public ExperimentModel apply(Experiment experimentModel) {
+    public ExperimentModel apply(Experiment e) {
         return ExperimentModel.builder()
-                .description(experimentModel.getDescription())
-                .success(experimentModel.isSuccess())
-                .dateConducted(experimentModel.getDateConducted())
-                .projectTitle(experimentModel.getProject() != null ? experimentModel.getProject().getTitle() : null)
+                .description(e.getDescription())
+                .success(e.isSuccess())
+                .dateConducted(e.getDateConducted())
+                .projectTitle(e.getProject().getTitle())
+                .researcherLogin(e.getResearcher().getLogin())
                 .build();
     }
 }

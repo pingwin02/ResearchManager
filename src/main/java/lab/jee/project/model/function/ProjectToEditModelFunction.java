@@ -8,11 +8,11 @@ import java.util.function.Function;
 public class ProjectToEditModelFunction implements Function<Project, ProjectEditModel> {
 
     @Override
-    public ProjectEditModel apply(Project project) {
+    public ProjectEditModel apply(Project p) {
         return ProjectEditModel.builder()
-                .title(project.getTitle())
-                .budget(project.getBudget())
-                .priority(project.getPriority())
+                .title(p.getTitle())
+                .budget(p.getBudget())
+                .priority(p.getPriority())
                 .build();
     }
 }

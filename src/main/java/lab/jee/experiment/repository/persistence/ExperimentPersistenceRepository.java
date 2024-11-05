@@ -2,7 +2,6 @@ package lab.jee.experiment.repository.persistence;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
@@ -36,6 +35,8 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
     @Override
     public void create(Experiment entity) {
         em.persist(entity);
+        em.refresh(em.find(Project.class, entity.getProject().getId()));
+        em.refresh(em.find(Researcher.class, entity.getResearcher().getId()));
     }
 
     @Override
@@ -45,44 +46,21 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
 
     @Override
     public void delete(UUID id) {
-        em.remove(em.find(Experiment.class, id));
-    }
-
-    @Override
-    public Optional<Experiment> findByIdAndResearcher(UUID id, Researcher researcher) {
-        try {
-            return Optional.of(em.createQuery("SELECT e FROM Experiment e WHERE e.id = :id AND e.researcher = :researcher", Experiment.class)
-                    .setParameter("id", id)
-                    .setParameter("researcher", researcher)
-                    .getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public Optional<Experiment> findByIdAndProject(UUID id, Project project) {
-        try {
-            return Optional.of(em.createQuery("SELECT e FROM Experiment e WHERE e.id = :id AND e.project = :project", Experiment.class)
-                    .setParameter("id", id)
-                    .setParameter("project", project)
-                    .getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        Experiment e = em.find(Experiment.class, id);
+        Project p = em.find(Project.class, e.getProject().getId());
+        em.remove(e);
+        em.refresh(p);
     }
 
     @Override
     public List<Experiment> findAllByResearcher(Researcher researcher) {
-        return em.createQuery("SELECT e FROM Experiment e WHERE e.researcher = :researcher", Experiment.class)
-                .setParameter("researcher", researcher)
-                .getResultList();
+        Researcher r = em.find(Researcher.class, researcher.getId());
+        return r.getExperiments();
     }
 
     @Override
     public List<Experiment> findAllByProject(Project project) {
-        return em.createQuery("SELECT e FROM Experiment e WHERE e.project = :project", Experiment.class)
-                .setParameter("project", project)
-                .getResultList();
+        Project p = em.find(Project.class, project.getId());
+        return p.getExperiments();
     }
 }

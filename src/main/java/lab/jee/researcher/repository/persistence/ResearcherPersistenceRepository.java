@@ -43,7 +43,9 @@ public class ResearcherPersistenceRepository implements ResearcherRepository {
 
     @Override
     public void delete(UUID id) {
-        em.remove(em.find(Researcher.class, id));
+        Researcher entity = em.find(Researcher.class, id);
+        em.refresh(entity);
+        em.remove(entity);
     }
 
     @Override

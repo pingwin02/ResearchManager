@@ -48,20 +48,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-4 p-2">
-                        <fieldset>
-                            <legend class="form-label fs-6">Project:</legend>
-                            <h:selectOneMenu id="projectMenu" value="#{experimentEdit.experiment.project}"
-                                             styleClass="form-select">
-                                <f:selectItem itemValue="#{null}" itemLabel="No Project"/>
-                                <f:selectItems value="#{experimentEdit.projects}" var="project" itemValue="#{project}"
-                                               itemLabel="#{project.title}"/>
-                            </h:selectOneMenu>
-                        </fieldset>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-2 p-2 text-center">
                         <h:commandButton styleClass="btn btn-primary" value="Update"
                                          action="#{experimentEdit.saveAction()}"/>

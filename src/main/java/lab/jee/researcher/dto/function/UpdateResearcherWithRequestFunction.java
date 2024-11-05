@@ -8,17 +8,18 @@ import java.util.function.BiFunction;
 public class UpdateResearcherWithRequestFunction implements BiFunction<Researcher, PatchResearcherRequest, Researcher> {
 
     @Override
-    public Researcher apply(Researcher entity, PatchResearcherRequest request) {
+    public Researcher apply(Researcher r, PatchResearcherRequest req) {
         return Researcher.builder()
-                .id(entity.getId())
-                .login(entity.getLogin())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .birthDate(request.getBirthDate())
-                .password(entity.getPassword())
-                .email(request.getEmail())
-                .role(entity.getRole())
-                .avatarPath(entity.getAvatarPath())
+                .id(r.getId())
+                .login(r.getLogin())
+                .firstName(req.getFirstName() != null ? req.getFirstName() : r.getFirstName())
+                .lastName(req.getLastName() != null ? req.getLastName() : r.getLastName())
+                .birthDate(req.getBirthDate() != null ? req.getBirthDate() : r.getBirthDate())
+                .password(r.getPassword())
+                .email(req.getEmail() != null ? req.getEmail() : r.getEmail())
+                .role(r.getRole())
+                .avatarPath(r.getAvatarPath())
+                .experiments(r.getExperiments())
                 .build();
     }
 }

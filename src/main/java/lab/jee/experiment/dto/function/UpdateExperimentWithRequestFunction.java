@@ -11,10 +11,11 @@ public class UpdateExperimentWithRequestFunction implements BiFunction<Experimen
     public Experiment apply(Experiment e, PatchExperimentRequest r) {
         return Experiment.builder()
                 .id(e.getId())
-                .description(r.getDescription())
+                .description(r.getDescription() != null ? r.getDescription() : e.getDescription())
                 .success(r.isSuccess())
-                .dateConducted(r.getDateConducted())
+                .dateConducted(r.getDateConducted() != null ? r.getDateConducted() : e.getDateConducted())
                 .project(e.getProject())
+                .researcher(e.getResearcher())
                 .build();
     }
 }

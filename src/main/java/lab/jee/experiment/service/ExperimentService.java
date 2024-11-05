@@ -5,9 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
-import lab.jee.project.entity.Project;
 import lab.jee.project.repository.api.ProjectRepository;
-import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
@@ -43,6 +41,9 @@ public class ExperimentService {
         if (projectRepository.find(experiment.getProject().getId()).isEmpty()) {
             throw new IllegalArgumentException("Project does not exist");
         }
+        if (researcherRepository.find(experiment.getResearcher().getId()).isEmpty()) {
+            throw new IllegalArgumentException("Researcher does not exist");
+        }
 
         experimentRepository.create(experiment);
     }
@@ -59,14 +60,6 @@ public class ExperimentService {
 
     public Optional<Experiment> find(UUID id) {
         return experimentRepository.find(id);
-    }
-
-    public Optional<Experiment> find(UUID id, Researcher researcher) {
-        return experimentRepository.findByIdAndResearcher(id, researcher);
-    }
-
-    public Optional<Experiment> find(UUID id, Project project) {
-        return experimentRepository.findByIdAndProject(id, project);
     }
 
     public List<Experiment> findAll() {

@@ -77,7 +77,7 @@ public class ProjectRestController implements ProjectController {
     @Override
     public void updateProject(UUID id, PatchProjectRequest request) {
         service.find(id).ifPresentOrElse(
-                project -> service.update(factory.updateProjectWithRequest().apply(project.getId(), request)),
+                project -> service.update(factory.updateProjectWithRequest().apply(project, request)),
                 () -> {
                     throw new NotFoundException();
                 }

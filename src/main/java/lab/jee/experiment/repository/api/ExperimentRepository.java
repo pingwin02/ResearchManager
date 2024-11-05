@@ -6,14 +6,9 @@ import lab.jee.repository.api.Repository;
 import lab.jee.researcher.entity.Researcher;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ExperimentRepository extends Repository<Experiment, UUID> {
-
-    Optional<Experiment> findByIdAndResearcher(UUID id, Researcher researcher);
-
-    Optional<Experiment> findByIdAndProject(UUID id, Project project);
 
     List<Experiment> findAllByResearcher(Researcher researcher);
 
