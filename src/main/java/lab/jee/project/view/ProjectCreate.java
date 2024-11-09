@@ -1,5 +1,6 @@
 package lab.jee.project.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Inject;
@@ -18,20 +19,21 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class ProjectCreate implements Serializable {
 
-    private final ProjectService projectService;
-
     private final ModelFunctionFactory factory;
-
     private final Conversation conversation;
-
+    private ProjectService service;
     @Getter
     private ProjectCreateModel project;
 
     @Inject
-    public ProjectCreate(ProjectService projectService, ModelFunctionFactory factory, Conversation conversation) {
-        this.projectService = projectService;
+    public ProjectCreate(ModelFunctionFactory factory, Conversation conversation) {
         this.factory = factory;
         this.conversation = conversation;
+    }
+
+    @EJB
+    public void setService(ProjectService service) {
+        this.service = service;
     }
 
     public void init() {
@@ -57,7 +59,7 @@ public class ProjectCreate implements Serializable {
     }
 
     public String saveAction() {
-        projectService.create(factory.modelToProject().apply(project));
+        service.create(factory.modelToProject().apply(project));
         conversation.end();
         return "/project/project_list.xhtml?faces-redirect=true";
     }

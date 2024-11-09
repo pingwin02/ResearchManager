@@ -1,5 +1,6 @@
 package lab.jee.project.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
@@ -12,16 +13,18 @@ import lab.jee.project.service.ProjectService;
 @Named
 public class ProjectList {
 
-    private final ProjectService service;
-
     private final ModelFunctionFactory factory;
-
+    private ProjectService service;
     private ProjectsModel projects;
 
     @Inject
-    public ProjectList(ProjectService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public ProjectList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(ProjectService service) {
+        this.service = service;
     }
 
     public ProjectsModel getProjects() {

@@ -1,11 +1,7 @@
-package lab.jee.configuration.observer;
+package lab.jee.configuration.singleton;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Initialized;
-import jakarta.enterprise.context.control.RequestContextController;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
-import jakarta.servlet.ServletContext;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.*;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.service.ExperimentService;
 import lab.jee.project.entity.Project;
@@ -15,55 +11,47 @@ import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.entity.ResearcherRole;
 import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
-import java.io.File;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor(force = true)
 public class InitializedData {
 
-    private final ResearcherService researcherService;
+    private ResearcherService researcherService;
+    private ProjectService projectService;
+    private ExperimentService experimentService;
+    private AvatarService avatarService;
 
-    private final ProjectService projectService;
-
-    private final ExperimentService experimentService;
-
-    private final AvatarService avatarService;
-
-    private final RequestContextController requestContextController;
-
-    private final ServletContext servletContext;
-
-    @Inject
-    public InitializedData(
-            ResearcherService researcherService,
-            ProjectService projectService,
-            ExperimentService experimentService,
-            AvatarService avatarService,
-            ServletContext servletContext,
-            RequestContextController requestContextController
-    ) {
+    @EJB
+    public void setResearcherService(ResearcherService researcherService) {
         this.researcherService = researcherService;
+    }
+
+    @EJB
+    public void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
+    }
+
+    @EJB
+    public void setExperimentService(ExperimentService experimentService) {
         this.experimentService = experimentService;
+    }
+
+    @EJB
+    public void setAvatarService(AvatarService avatarService) {
         this.avatarService = avatarService;
-        this.requestContextController = requestContextController;
-        this.servletContext = servletContext;
     }
 
-
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
-    }
-
+    @PostConstruct
     @SneakyThrows
     private void init() {
-        requestContextController.activate();
-
         if (researcherService.find("clayre").isEmpty()) {
 
             Researcher clayre = Researcher.builder()
@@ -127,8 +115,6 @@ public class InitializedData {
             researcherService.create(madison);
             researcherService.create(mark);
 
-            prepareAvatarDirectory();
-
             avatarService.createAvatar(clayre.getId(), getResourceAsStream("clayre.png"));
             avatarService.createAvatar(jonathan.getId(), getResourceAsStream("jonathan.png"));
             avatarService.createAvatar(jason.getId(), getResourceAsStream("jason.png"));
@@ -172,21 +158,6 @@ public class InitializedData {
 
             experimentService.create(experiment);
             experimentService.create(experiment2);
-        }
-
-        requestContextController.deactivate();
-    }
-
-    private void prepareAvatarDirectory() {
-        File avatarDir = new File(Paths.get(servletContext
-                .getRealPath(servletContext
-                        .getInitParameter("avatarDir"))).toString());
-        if (!avatarDir.exists()) {
-            avatarDir.mkdirs();
-        } else {
-            for (File file : avatarDir.listFiles()) {
-                file.delete();
-            }
         }
     }
 

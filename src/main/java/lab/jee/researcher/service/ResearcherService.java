@@ -1,8 +1,8 @@
 package lab.jee.researcher.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import lab.jee.crypto.component.Pbkdf2PasswordHash;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class ResearcherService {
 
@@ -37,7 +38,6 @@ public class ResearcherService {
         return researcherRepository.findAll();
     }
 
-    @Transactional
     public void create(Researcher researcher) {
         if (researcherRepository.findByLogin(researcher.getLogin()).isPresent()) {
             throw new IllegalArgumentException("Researcher already exists");
@@ -50,12 +50,10 @@ public class ResearcherService {
         return find(login).map(researcher -> passwordHash.verify(password.toCharArray(), researcher.getPassword())).orElse(false);
     }
 
-    @Transactional
     public void update(Researcher researcher) {
         researcherRepository.update(researcher);
     }
 
-    @Transactional
     public void delete(UUID id) {
         researcherRepository.delete(id);
     }

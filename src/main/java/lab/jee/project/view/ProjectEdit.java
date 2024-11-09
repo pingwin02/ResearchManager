@@ -1,5 +1,6 @@
 package lab.jee.project.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -21,10 +22,8 @@ import java.util.UUID;
 @Named
 public class ProjectEdit implements Serializable {
 
-    private final ProjectService service;
-
     private final ModelFunctionFactory factory;
-
+    private ProjectService service;
     @Setter
     @Getter
     private UUID id;
@@ -33,9 +32,13 @@ public class ProjectEdit implements Serializable {
     private ProjectEditModel project;
 
     @Inject
-    public ProjectEdit(ProjectService projectService, ModelFunctionFactory factory) {
-        this.service = projectService;
+    public ProjectEdit(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(ProjectService service) {
+        this.service = service;
     }
 
     public void init() throws IOException {

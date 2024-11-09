@@ -1,5 +1,7 @@
 package lab.jee.experiment.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -24,22 +26,22 @@ import java.util.logging.Level;
 @Log
 public class ExperimentRestController implements ExperimentController {
 
-    private final ExperimentService service;
-
     private final DtoFunctionFactory factory;
-
     private final UriInfo uriInfo;
-
+    private ExperimentService service;
     private HttpServletResponse response;
 
     @Inject
     public ExperimentRestController(
-            ExperimentService service,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(ExperimentService service) {
+        this.service = service;
     }
 
     @Context
@@ -82,9 +84,11 @@ public class ExperimentRestController implements ExperimentController {
                     .toString());
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
-        } catch (IllegalArgumentException ex) {
-            log.log(Level.WARNING, ex.getMessage(), ex);
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 package lab.jee.project.repository.persistence;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lab.jee.project.entity.Project;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestScoped
+@Dependent
 public class ProjectPersistenceRepository implements ProjectRepository {
 
     private EntityManager em;

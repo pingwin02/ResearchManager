@@ -1,5 +1,7 @@
 package lab.jee.researcher.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
@@ -23,26 +25,28 @@ import java.util.logging.Level;
 @Log
 public class ResearcherRestController implements ResearcherController {
 
-    private final ResearcherService service;
-
-    private final AvatarService avatarService;
-
     private final DtoFunctionFactory factory;
-
     private final UriInfo uriInfo;
-
+    private ResearcherService service;
+    private AvatarService avatarService;
     private HttpServletResponse response;
 
     @Inject
     public ResearcherRestController(
-            ResearcherService service,
-            AvatarService avatarService,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo) {
-        this.avatarService = avatarService;
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(ResearcherService service) {
+        this.service = service;
+    }
+
+    @EJB
+    public void setAvatarService(AvatarService avatarService) {
+        this.avatarService = avatarService;
     }
 
     @Context
@@ -80,9 +84,11 @@ public class ResearcherRestController implements ResearcherController {
                     .toString());
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
-        } catch (IllegalArgumentException ex) {
-            log.log(Level.WARNING, ex.getMessage(), ex);
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
         }
     }
 
@@ -123,8 +129,11 @@ public class ResearcherRestController implements ResearcherController {
                         .toString());
 
                 throw new WebApplicationException(HttpServletResponse.SC_CREATED);
-            } catch (IllegalStateException ex) {
-                throw new BadRequestException();
+            } catch (EJBException ex) {
+                if (ex.getCause() instanceof IllegalArgumentException) {
+                    log.log(Level.WARNING, ex.getMessage(), ex);
+                    throw new BadRequestException(ex);
+                }
             }
         }, () -> {
             throw new NotFoundException();
@@ -136,8 +145,11 @@ public class ResearcherRestController implements ResearcherController {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
                 avatarService.updateAvatar(researcher.getId(), avatar);
-            } catch (IllegalStateException ex) {
-                throw new BadRequestException();
+            } catch (EJBException ex) {
+                if (ex.getCause() instanceof IllegalArgumentException) {
+                    log.log(Level.WARNING, ex.getMessage(), ex);
+                    throw new BadRequestException(ex);
+                }
             }
         }, () -> {
             throw new NotFoundException();
@@ -149,8 +161,11 @@ public class ResearcherRestController implements ResearcherController {
         service.find(id).ifPresentOrElse(researcher -> {
             try {
                 avatarService.deleteAvatar(researcher.getId());
-            } catch (IllegalStateException ex) {
-                throw new BadRequestException();
+            } catch (EJBException ex) {
+                if (ex.getCause() instanceof IllegalArgumentException) {
+                    log.log(Level.WARNING, ex.getMessage(), ex);
+                    throw new BadRequestException(ex);
+                }
             }
         }, () -> {
             throw new NotFoundException();

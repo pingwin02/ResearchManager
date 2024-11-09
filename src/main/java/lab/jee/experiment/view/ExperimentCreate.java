@@ -1,5 +1,6 @@
 package lab.jee.experiment.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Inject;
@@ -22,16 +23,11 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class ExperimentCreate implements Serializable {
 
-    private final ExperimentService experimentService;
-
-    private final ProjectService projectService;
-
-    private final ResearcherService researcherService;
-
     private final ModelFunctionFactory factory;
-
     private final Conversation conversation;
-
+    private ExperimentService experimentService;
+    private ProjectService projectService;
+    private ResearcherService researcherService;
     @Getter
     private ExperimentCreateModel experiment;
 
@@ -39,16 +35,25 @@ public class ExperimentCreate implements Serializable {
     private List<ProjectModel> projects;
 
     @Inject
-    public ExperimentCreate(ExperimentService experimentService,
-                            ProjectService projectService,
-                            ResearcherService researcherService,
-                            ModelFunctionFactory factory,
+    public ExperimentCreate(ModelFunctionFactory factory,
                             Conversation conversation) {
-        this.experimentService = experimentService;
-        this.projectService = projectService;
-        this.researcherService = researcherService;
         this.factory = factory;
         this.conversation = conversation;
+    }
+
+    @EJB
+    public void setExperimentService(ExperimentService experimentService) {
+        this.experimentService = experimentService;
+    }
+
+    @EJB
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    @EJB
+    public void setResearcherService(ResearcherService researcherService) {
+        this.researcherService = researcherService;
     }
 
     public void init() {

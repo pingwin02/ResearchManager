@@ -1,12 +1,14 @@
 package lab.jee.researcher.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletContext;
-import jakarta.transaction.Transactional;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -16,20 +18,30 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class AvatarService {
 
     private final ResearcherRepository researcherRepository;
-    private final Path avatarDirectory;
+    @Resource(name = "avatarsDir")
+    private String avatarsDir;
+    private Path avatarDirectory;
 
     @Inject
-    public AvatarService(ResearcherRepository researcherRepository, ServletContext servletContext) {
+    public AvatarService(ResearcherRepository researcherRepository) {
         this.researcherRepository = researcherRepository;
+    }
 
-        this.avatarDirectory = Paths.get(servletContext
-                .getRealPath(servletContext
-                        .getInitParameter("avatarDir")));
+    @PostConstruct
+    public void init() {
+        if (avatarsDir == null) {
+            throw new IllegalStateException("avatarsDir is not properly configured");
+        }
+        avatarDirectory = Paths.get(System.getProperty("server.config.dir").split("target")[0],
+                "src/main/webapp/", avatarsDir);
+
+        createAvatarDirectoryIfNotExists();
     }
 
     public Optional<byte[]> getAvatar(UUID id) {
@@ -46,7 +58,6 @@ public class AvatarService {
         });
     }
 
-    @Transactional
     public void createAvatar(UUID id, InputStream is) {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
@@ -67,7 +78,6 @@ public class AvatarService {
         });
     }
 
-    @Transactional
     public void updateAvatar(UUID id, InputStream is) {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
@@ -88,7 +98,6 @@ public class AvatarService {
         });
     }
 
-    @Transactional
     public void deleteAvatar(UUID id) {
         researcherRepository.find(id).ifPresent(researcher -> {
             if (researcher.getAvatarPath() != null) {
@@ -102,5 +111,16 @@ public class AvatarService {
                 researcherRepository.update(researcher);
             }
         });
+    }
+
+    private void createAvatarDirectoryIfNotExists() {
+        File directory = new File(avatarDirectory.toString());
+        if (!directory.exists()) {
+            directory.mkdirs();
+        } else {
+            for (File file : directory.listFiles()) {
+                file.delete();
+            }
+        }
     }
 }

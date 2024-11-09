@@ -1,5 +1,6 @@
 package lab.jee.experiment.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
@@ -21,10 +22,8 @@ import java.util.UUID;
 @Named
 public class ExperimentView implements Serializable {
 
-    private final ExperimentService service;
-
     private final ModelFunctionFactory factory;
-
+    private ExperimentService service;
     @Setter
     @Getter
     private UUID id;
@@ -33,9 +32,13 @@ public class ExperimentView implements Serializable {
     private ExperimentModel experiment;
 
     @Inject
-    public ExperimentView(ExperimentService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public ExperimentView(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(ExperimentService service) {
+        this.service = service;
     }
 
     public void init() throws IOException {

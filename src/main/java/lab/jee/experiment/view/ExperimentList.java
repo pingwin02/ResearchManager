@@ -1,5 +1,6 @@
 package lab.jee.experiment.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
@@ -12,16 +13,18 @@ import lab.jee.experiment.service.ExperimentService;
 @Named
 public class ExperimentList {
 
-    private final ExperimentService service;
-
     private final ModelFunctionFactory factory;
-
+    private ExperimentService service;
     private ExperimentsModel experiments;
 
     @Inject
-    public ExperimentList(ExperimentService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public ExperimentList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(ExperimentService service) {
+        this.service = service;
     }
 
     public ExperimentsModel getExperiments() {

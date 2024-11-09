@@ -1,5 +1,6 @@
 package lab.jee.project.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -23,12 +24,9 @@ import java.util.UUID;
 @Named
 public class ProjectView implements Serializable {
 
-    private final ProjectService projectService;
-
     private final ExperimentService experimentService;
-
     private final ModelFunctionFactory factory;
-
+    private ProjectService service;
     @Setter
     @Getter
     private UUID id;
@@ -40,15 +38,19 @@ public class ProjectView implements Serializable {
     private ExperimentsModel experiments;
 
     @Inject
-    public ProjectView(ProjectService projectService, ExperimentService experimentService,
+    public ProjectView(ExperimentService experimentService,
                        ModelFunctionFactory factory) {
-        this.projectService = projectService;
         this.experimentService = experimentService;
         this.factory = factory;
     }
 
+    @EJB
+    public void setService(ProjectService service) {
+        this.service = service;
+    }
+
     public void init() throws IOException {
-        Optional<Project> project = projectService.find(id);
+        Optional<Project> project = service.find(id);
         if (project.isPresent()) {
             this.project = factory.projectToModel().apply(project.get());
             this.experiments = factory.experimentsToModel().apply(experimentService.findAllByProject(id).orElseThrow());
