@@ -3,7 +3,7 @@ package lab.jee.researcher.service;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import lab.jee.crypto.component.Pbkdf2PasswordHash;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lab.jee.researcher.entity.Researcher;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,9 @@ public class ResearcherService {
     private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public ResearcherService(ResearcherRepository researcherRepository, Pbkdf2PasswordHash passwordHash) {
+    public ResearcherService(ResearcherRepository researcherRepository,
+                             @SuppressWarnings("CdiInjectionPointsInspection")
+                             Pbkdf2PasswordHash passwordHash) {
         this.researcherRepository = researcherRepository;
         this.passwordHash = passwordHash;
     }

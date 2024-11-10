@@ -42,7 +42,7 @@ public class ExperimentView implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Experiment> experiment = service.find(id);
+        Optional<Experiment> experiment = service.findForCallerPrincipal(id);
         if (experiment.isPresent()) {
             this.experiment = factory.experimentToModel().apply(experiment.get());
         } else {

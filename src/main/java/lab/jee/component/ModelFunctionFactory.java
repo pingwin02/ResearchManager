@@ -3,6 +3,8 @@ package lab.jee.component;
 import jakarta.enterprise.context.ApplicationScoped;
 import lab.jee.experiment.model.function.*;
 import lab.jee.project.model.function.*;
+import lab.jee.researcher.model.function.ResearcherToModelFunction;
+import lab.jee.researcher.model.function.ResearchersToModelFunction;
 
 @ApplicationScoped
 public class ModelFunctionFactory {
@@ -12,7 +14,7 @@ public class ModelFunctionFactory {
     }
 
     public ExperimentToEditModelFunction experimentToEditModel() {
-        return new ExperimentToEditModelFunction();
+        return new ExperimentToEditModelFunction(researcherToModel());
     }
 
     public ExperimentToModelFunction experimentToModel() {
@@ -45,6 +47,14 @@ public class ModelFunctionFactory {
 
     public UpdateProjectWithModelFunction updateProject() {
         return new UpdateProjectWithModelFunction();
+    }
+
+    public ResearcherToModelFunction researcherToModel() {
+        return new ResearcherToModelFunction();
+    }
+
+    public ResearchersToModelFunction researchersToModel() {
+        return new ResearchersToModelFunction();
     }
 
 }

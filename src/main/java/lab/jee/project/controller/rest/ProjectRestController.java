@@ -1,5 +1,6 @@
 package lab.jee.project.controller.rest;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
@@ -17,6 +18,7 @@ import lab.jee.project.dto.GetProjectsResponse;
 import lab.jee.project.dto.PatchProjectRequest;
 import lab.jee.project.dto.PutProjectRequest;
 import lab.jee.project.service.ProjectService;
+import lab.jee.researcher.entity.ResearcherRole;
 import lombok.extern.java.Log;
 
 import java.util.UUID;
@@ -24,6 +26,7 @@ import java.util.logging.Level;
 
 @Path("")
 @Log
+@RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
 public class ProjectRestController implements ProjectController {
 
     private final DtoFunctionFactory factory;
@@ -49,16 +52,19 @@ public class ProjectRestController implements ProjectController {
         this.response = response;
     }
 
+    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public GetProjectResponse getProject(UUID id) {
         return factory.projectToResponse().apply(service.find(id).orElseThrow(NotFoundException::new));
     }
 
+    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public GetProjectsResponse getProjects() {
         return factory.projectsToResponse().apply(service.findAll());
     }
 
+    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void createProject(UUID id, PutProjectRequest request) {
         try {
@@ -78,6 +84,7 @@ public class ProjectRestController implements ProjectController {
         }
     }
 
+    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void updateProject(UUID id, PatchProjectRequest request) {
         service.find(id).ifPresentOrElse(
@@ -89,6 +96,7 @@ public class ProjectRestController implements ProjectController {
 
     }
 
+    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void deleteProject(UUID id) {
         service.find(id).ifPresentOrElse(

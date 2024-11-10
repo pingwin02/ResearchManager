@@ -57,7 +57,7 @@ public class ExperimentEdit implements Serializable {
         projects = projectService.findAll().stream()
                 .map(factory.projectToModel()::apply)
                 .toList();
-        Optional<Experiment> experiment = experimentService.find(id);
+        Optional<Experiment> experiment = experimentService.findForCallerPrincipal(id);
         if (experiment.isPresent()) {
             this.experiment = factory.experimentToEditModel().apply(experiment.get());
         } else {

@@ -63,8 +63,6 @@ public class ExperimentCreate implements Serializable {
                     .toList();
             experiment = ExperimentCreateModel.builder()
                     .id(UUID.randomUUID())
-                    // TODO
-                    .researcher(researcherService.find("clayre").get().getId())
                     .build();
             conversation.begin();
         }
@@ -88,7 +86,7 @@ public class ExperimentCreate implements Serializable {
     }
 
     public String saveAction() {
-        experimentService.create(factory.modelToExperiment().apply(experiment));
+        experimentService.createForCallerPrincipal(factory.modelToExperiment().apply(experiment));
         conversation.end();
         return "/experiment/experiment_list.xhtml?faces-redirect=true";
     }

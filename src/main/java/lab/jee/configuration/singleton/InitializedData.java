@@ -1,7 +1,11 @@
 package lab.jee.configuration.singleton;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
 import jakarta.ejb.*;
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.service.ExperimentService;
 import lab.jee.project.entity.Project;
@@ -13,6 +17,7 @@ import lab.jee.researcher.service.AvatarService;
 import lab.jee.researcher.service.ResearcherService;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -21,13 +26,20 @@ import java.util.UUID;
 @Singleton
 @Startup
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
+@DependsOn("InitializeAdminService")
+@DeclareRoles({ResearcherRole.LEAD_RESEARCHER, ResearcherRole.ASSISTANT})
+@RunAs(ResearcherRole.LEAD_RESEARCHER)
+@Log
 public class InitializedData {
 
     private ResearcherService researcherService;
     private ProjectService projectService;
     private ExperimentService experimentService;
     private AvatarService avatarService;
+
+    @Inject
+    private SecurityContext securityContext;
 
     @EJB
     public void setResearcherService(ResearcherService researcherService) {

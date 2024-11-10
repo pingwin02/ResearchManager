@@ -29,7 +29,7 @@ public class ExperimentList {
 
     public ExperimentsModel getExperiments() {
         if (experiments == null) {
-            experiments = factory.experimentsToModel().apply(service.findAll());
+            experiments = factory.experimentsToModel().apply(service.findAllForCallerPrincipal());
         }
         return experiments;
     }

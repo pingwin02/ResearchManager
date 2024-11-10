@@ -3,7 +3,6 @@ package lab.jee.experiment.dto;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,7 +18,5 @@ public class PutExperimentRequest {
     private boolean success;
 
     private LocalDate dateConducted;
-
-    private UUID researcherId;
 
 }

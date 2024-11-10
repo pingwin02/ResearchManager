@@ -25,7 +25,4 @@ public class ExperimentCreateModel {
 
     private ProjectModel project;
 
-    // TODO
-    private UUID researcher;
-
 }

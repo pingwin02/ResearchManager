@@ -11,7 +11,7 @@ Content-Type: application/json
   "login": "john",
   "firstName": "John",
   "lastName": "Smith",
-  "role": "LEAD_RESEARCHER",
+  "role": "admin",
   "birthDate": "1980-01-01",
   "password": "password",
   "email": "john@jee.com"
@@ -71,7 +71,6 @@ DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 
 ### Get all projects
-
 GET http://localhost:9080/ResearchManager/api/projects
 
 ### Create project

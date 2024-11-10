@@ -2,11 +2,13 @@ package lab.jee.experiment.model.function;
 
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.model.ExperimentEditModel;
+import lab.jee.researcher.entity.Researcher;
 
 import java.io.Serializable;
 import java.util.function.BiFunction;
 
-public class UpdateExperimentWithModelFunction implements BiFunction<Experiment, ExperimentEditModel, Experiment>, Serializable {
+public class UpdateExperimentWithModelFunction implements BiFunction<Experiment,
+        ExperimentEditModel, Experiment>, Serializable {
 
     @Override
     public Experiment apply(Experiment e, ExperimentEditModel m) {
@@ -16,7 +18,9 @@ public class UpdateExperimentWithModelFunction implements BiFunction<Experiment,
                 .success(m.isSuccess())
                 .dateConducted(m.getDateConducted())
                 .project(e.getProject())
-                .researcher(e.getResearcher())
+                .researcher(Researcher.builder()
+                        .id(m.getResearcher()
+                                .getId()).build())
                 .build();
     }
 }

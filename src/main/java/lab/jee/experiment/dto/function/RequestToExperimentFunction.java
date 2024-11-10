@@ -4,7 +4,6 @@ import lab.jee.experiment.dto.PutExperimentRequest;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.function.api.TriFunction;
 import lab.jee.project.entity.Project;
-import lab.jee.researcher.entity.Researcher;
 
 import java.util.UUID;
 
@@ -18,7 +17,6 @@ public class RequestToExperimentFunction implements TriFunction<UUID, UUID, PutE
                 .success(r.isSuccess())
                 .dateConducted(r.getDateConducted())
                 .project(Project.builder().id(projectId).build())
-                .researcher(Researcher.builder().id(r.getResearcherId()).build())
                 .build();
     }
 }
