@@ -22,7 +22,7 @@ import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/ResearchManager",
         callerQuery = "SELECT password FROM researchers WHERE login = ?",
-        groupsQuery = "SELECT role FROM researchers WHERE login = ?",
+        groupsQuery = "SELECT role FROM researchers__roles WHERE id = (SELECT id FROM researchers WHERE login = ?)",
         hashAlgorithm = Pbkdf2PasswordHash.class
 )
 public class AuthenticationConfig {

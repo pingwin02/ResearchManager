@@ -14,7 +14,6 @@ public class ResearcherToResponseFunction implements Function<Researcher, GetRes
                 .login(researcher.getLogin())
                 .firstName(researcher.getFirstName())
                 .lastName(researcher.getLastName())
-                .role(researcher.getRole())
                 .birthDate(researcher.getBirthDate())
                 .email(researcher.getEmail())
                 .build();

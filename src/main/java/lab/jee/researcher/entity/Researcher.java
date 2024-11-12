@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -30,7 +31,11 @@ public class Researcher implements Serializable {
 
     private String lastName;
 
-    private String role;
+    @CollectionTable(name = "researchers__roles", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Singular
+    private Set<String> roles;
 
     private LocalDate birthDate;
 

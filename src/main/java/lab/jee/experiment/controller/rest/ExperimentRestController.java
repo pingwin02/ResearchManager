@@ -24,7 +24,7 @@ import java.util.logging.Level;
 
 @Path("")
 @Log
-@RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
+@RolesAllowed(ResearcherRole.ASSISTANT)
 public class ExperimentRestController implements ExperimentController {
 
     private final DtoFunctionFactory factory;
@@ -50,13 +50,11 @@ public class ExperimentRestController implements ExperimentController {
         this.response = response;
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public GetExperimentResponse getExperiment(UUID id) {
         return service.findForCallerPrincipal(id).map(factory.experimentToResponse()).orElseThrow(NotFoundException::new);
     }
 
-    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     @Override
     public GetExperimentsResponse getExperiments() {
         return factory.experimentsToResponse().apply(service.findAllForCallerPrincipal());
@@ -78,7 +76,6 @@ public class ExperimentRestController implements ExperimentController {
                 .orElseThrow(NotFoundException::new);
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void createExperiment(UUID projectId, UUID experimentId, PutExperimentRequest request) {
         try {
@@ -98,7 +95,6 @@ public class ExperimentRestController implements ExperimentController {
         }
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void updateExperiment(UUID id, PatchExperimentRequest request) {
         service.findForCallerPrincipal(id).ifPresentOrElse(
@@ -116,7 +112,6 @@ public class ExperimentRestController implements ExperimentController {
         );
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public void deleteExperiment(UUID id) {
         service.findForCallerPrincipal(id).ifPresentOrElse(

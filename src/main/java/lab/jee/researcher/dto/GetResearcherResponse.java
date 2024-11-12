@@ -22,8 +22,6 @@ public class GetResearcherResponse {
 
     private String lastName;
 
-    private String role;
-
     private String email;
 
     private LocalDate birthDate;

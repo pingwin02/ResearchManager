@@ -47,9 +47,9 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
     @Override
     public void delete(UUID id) {
         Experiment e = em.find(Experiment.class, id);
-        Project p = em.find(Project.class, e.getProject().getId());
         em.remove(e);
-        em.refresh(p);
+        em.refresh(em.find(Project.class, e.getProject().getId()));
+        em.refresh(em.find(Researcher.class, e.getResearcher().getId()));
     }
 
     @Override

@@ -70,12 +70,19 @@ DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-
 
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 
+# clayre (admin) Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
+# jonathan (user) Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+# jason (user) Authorization: Basic amFzb246cGFzc3dvcmQ=
+
 ### Get all projects
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/projects
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 
 ### Create project
-
+// @no-cookie-jar
 PUT http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 Content-Type: application/json
 
 {
@@ -85,12 +92,13 @@ Content-Type: application/json
 }
 
 ### Get project by id
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
 
 ### Update project
-
+// @no-cookie-jar
 PATCH http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 Content-Type: application/json
 
 {
@@ -100,36 +108,41 @@ Content-Type: application/json
 }
 
 ### Delete project
-
+// @no-cookie-jar
 DELETE http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 
 ### Get all experiments
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/experiments
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 
 ### Create experiment
-
+// @no-cookie-jar
 PUT http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 Content-Type: application/json
 
 {
   "description": "Description 1",
   "success": true,
-  "dateConducted": "2024-10-24",
-  "researcherId": "b8371a52-2d1a-4af9-a5ba-15934740e3e1"
+  "dateConducted": "2024-10-24"
 }
 
 ### Get experiment by id
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 
 ### Get project experiments
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Update experiment
-
+// @no-cookie-jar
 PATCH http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 Content-Type: application/json
 
 {
@@ -139,5 +152,6 @@ Content-Type: application/json
 }
 
 ### Delete experiment
-
+// @no-cookie-jar
 DELETE http://localhost:9080/ResearchManager/api/experiments/4141cca1-25f6-4635-a86e-39f911a8db3e
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=

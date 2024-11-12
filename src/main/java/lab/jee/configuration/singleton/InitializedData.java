@@ -72,6 +72,7 @@ public class InitializedData {
                     .firstName("Clayre")
                     .lastName("Smith")
                     .role(ResearcherRole.LEAD_RESEARCHER)
+                    .role(ResearcherRole.ASSISTANT)
                     .birthDate(LocalDate.of(1975, 6, 4))
                     .email("clayre@jee.com")
                     .password("password")
@@ -165,7 +166,7 @@ public class InitializedData {
                     .success(false)
                     .dateConducted(LocalDate.of(2024, 3, 5))
                     .project(project2)
-                    .researcher(clayre)
+                    .researcher(jonathan)
                     .build();
 
             experimentService.create(experiment);

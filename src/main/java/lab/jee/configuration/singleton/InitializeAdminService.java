@@ -43,10 +43,11 @@ public class InitializeAdminService {
             Researcher admin = Researcher.builder()
                     .id(UUID.fromString("14d59f3a-057c-44d5-825a-19295a6600a8"))
                     .login("admin-service")
-                    .password(passwordHash.generate("admin-service".toCharArray()))
+                    .password(passwordHash.generate("admin".toCharArray()))
                     .firstName("Admin")
                     .lastName("Service")
                     .role(ResearcherRole.LEAD_RESEARCHER)
+                    .role(ResearcherRole.ASSISTANT)
                     .birthDate(LocalDate.of(1990, 1, 1))
                     .email("admin@jee.com")
                     .build();

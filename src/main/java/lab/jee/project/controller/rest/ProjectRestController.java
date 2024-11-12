@@ -26,7 +26,7 @@ import java.util.logging.Level;
 
 @Path("")
 @Log
-@RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
+@RolesAllowed(ResearcherRole.ASSISTANT)
 public class ProjectRestController implements ProjectController {
 
     private final DtoFunctionFactory factory;
@@ -52,19 +52,17 @@ public class ProjectRestController implements ProjectController {
         this.response = response;
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public GetProjectResponse getProject(UUID id) {
         return factory.projectToResponse().apply(service.find(id).orElseThrow(NotFoundException::new));
     }
 
-    @RolesAllowed({ResearcherRole.ASSISTANT, ResearcherRole.LEAD_RESEARCHER})
     @Override
     public GetProjectsResponse getProjects() {
         return factory.projectsToResponse().apply(service.findAll());
     }
 
-    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
+    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     @Override
     public void createProject(UUID id, PutProjectRequest request) {
         try {
@@ -84,7 +82,7 @@ public class ProjectRestController implements ProjectController {
         }
     }
 
-    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
+    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     @Override
     public void updateProject(UUID id, PatchProjectRequest request) {
         service.find(id).ifPresentOrElse(
@@ -96,7 +94,7 @@ public class ProjectRestController implements ProjectController {
 
     }
 
-    @RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
+    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     @Override
     public void deleteProject(UUID id) {
         service.find(id).ifPresentOrElse(

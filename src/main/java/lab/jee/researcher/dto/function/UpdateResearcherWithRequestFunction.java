@@ -17,7 +17,7 @@ public class UpdateResearcherWithRequestFunction implements BiFunction<Researche
                 .birthDate(req.getBirthDate() != null ? req.getBirthDate() : r.getBirthDate())
                 .password(r.getPassword())
                 .email(req.getEmail() != null ? req.getEmail() : r.getEmail())
-                .role(r.getRole())
+                .roles(r.getRoles())
                 .avatarPath(r.getAvatarPath())
                 .experiments(r.getExperiments())
                 .build();

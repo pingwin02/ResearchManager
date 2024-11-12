@@ -24,7 +24,7 @@ import java.util.logging.Level;
 
 @Path("")
 @Log
-@RolesAllowed({ResearcherRole.LEAD_RESEARCHER})
+@RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
 public class ResearcherRestController implements ResearcherController {
 
     private final DtoFunctionFactory factory;
