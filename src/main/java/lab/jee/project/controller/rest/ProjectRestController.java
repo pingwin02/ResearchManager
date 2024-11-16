@@ -75,8 +75,8 @@ public class ProjectRestController implements ProjectController {
 
             throw new WebApplicationException(HttpServletResponse.SC_CREATED);
         } catch (EJBException ex) {
+            log.log(Level.WARNING, ex.getMessage(), ex);
             if (ex.getCause() instanceof IllegalArgumentException) {
-                log.log(Level.WARNING, ex.getMessage(), ex);
                 throw new BadRequestException(ex);
             }
         }

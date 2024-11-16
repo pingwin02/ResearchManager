@@ -3,7 +3,6 @@ package lab.jee.authentication.config;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import jakarta.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
-import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @ApplicationScoped
 @BasicAuthenticationMechanismDefinition(realmName = "ResearchManager")
@@ -22,8 +21,7 @@ import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/ResearchManager",
         callerQuery = "SELECT password FROM researchers WHERE login = ?",
-        groupsQuery = "SELECT role FROM researchers__roles WHERE id = (SELECT id FROM researchers WHERE login = ?)",
-        hashAlgorithm = Pbkdf2PasswordHash.class
+        groupsQuery = "SELECT role FROM researchers__roles WHERE id = (SELECT id FROM researchers WHERE login = ?)"
 )
 public class AuthenticationConfig {
 }

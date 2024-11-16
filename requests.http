@@ -1,9 +1,14 @@
-### Get all researchers
+# clayre (admin) Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
+# jonathan (user) Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+# jason (user) Authorization: Basic amFzb246cGFzc3dvcmQ=
 
+### Get all researchers
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/researchers
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Create researcher
-
+// @no-cookie-jar
 PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
 Content-Type: application/json
 
@@ -18,16 +23,19 @@ Content-Type: application/json
 }
 
 ### Get researcher by id
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Get researcher experiments
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/researchers/b8371a52-2d1a-4af9-a5ba-15934740e3e1/experiments
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Update researcher
-
+// @no-cookie-jar
 PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 Content-Type: application/json
 
 {
@@ -37,8 +45,9 @@ Content-Type: application/json
 }
 
 ### Create researcher avatar
-
+// @no-cookie-jar
 PUT http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -48,12 +57,14 @@ Content-Disposition: form-data; name="avatar"; filename="john.png"
 --boundary
 
 ### Get researcher avatar
-
+// @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Update researcher avatar
-
+// @no-cookie-jar
 PATCH http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -63,16 +74,14 @@ Content-Disposition: form-data; name="avatar"; filename="madison.png"
 --boundary
 
 ### Delete researcher avatar
-
+// @no-cookie-jar
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c/avatar
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Delete researcher
-
+// @no-cookie-jar
 DELETE http://localhost:9080/ResearchManager/api/researchers/1a8bc5d1-0219-4172-9d6a-85154079ff0c
-
-# clayre (admin) Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
-# jonathan (user) Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
-# jason (user) Authorization: Basic amFzb246cGFzc3dvcmQ=
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Get all projects
 // @no-cookie-jar
@@ -82,7 +91,7 @@ Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 ### Create project
 // @no-cookie-jar
 PUT http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
-Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 Content-Type: application/json
 
 {
@@ -94,11 +103,12 @@ Content-Type: application/json
 ### Get project by id
 // @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Update project
 // @no-cookie-jar
 PATCH http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
-Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 Content-Type: application/json
 
 {
@@ -110,12 +120,12 @@ Content-Type: application/json
 ### Delete project
 // @no-cookie-jar
 DELETE http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f
-Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Get all experiments
 // @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/experiments
-Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
+Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
 
 ### Create experiment
 // @no-cookie-jar

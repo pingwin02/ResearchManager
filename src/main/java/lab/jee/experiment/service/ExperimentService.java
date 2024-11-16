@@ -1,5 +1,6 @@
 package lab.jee.experiment.service;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@RolesAllowed(ResearcherRole.ASSISTANT)
 public class ExperimentService {
 
     private final ExperimentRepository experimentRepository;
@@ -108,14 +110,16 @@ public class ExperimentService {
         }
     }
 
-    public Optional<List<Experiment>> findAllByResearcher(UUID id) {
-        return researcherRepository.find(id)
-                .map(experimentRepository::findAllByResearcher);
-    }
-
+    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     public Optional<List<Experiment>> findAllByProject(UUID id) {
         return projectRepository.find(id)
                 .map(experimentRepository::findAllByProject);
+    }
+
+    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
+    public Optional<List<Experiment>> findAllByResearcher(UUID id) {
+        return researcherRepository.find(id)
+                .map(experimentRepository::findAllByResearcher);
     }
 
     private void checkAdminRoleOrOwner(Optional<Experiment> experiment) throws EJBAccessException {

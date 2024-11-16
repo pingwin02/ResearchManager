@@ -3,11 +3,13 @@ package lab.jee.researcher.controller.rest;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
-import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
 import lab.jee.component.DtoFunctionFactory;
@@ -91,8 +93,6 @@ public class ResearcherRestController implements ResearcherController {
             log.log(Level.WARNING, ex.getMessage(), ex);
             if (ex.getCause() instanceof IllegalArgumentException) {
                 throw new BadRequestException(ex);
-            } else if (ex.getCause() instanceof EJBAccessException) {
-                throw new ForbiddenException(ex.getMessage());
             }
         }
     }
@@ -140,8 +140,6 @@ public class ResearcherRestController implements ResearcherController {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 if (ex.getCause() instanceof IllegalArgumentException) {
                     throw new BadRequestException(ex);
-                } else if (ex.getCause() instanceof EJBAccessException) {
-                    throw new ForbiddenException(ex.getMessage());
                 }
             }
         }, () -> {
@@ -158,8 +156,6 @@ public class ResearcherRestController implements ResearcherController {
                 log.log(Level.WARNING, ex.getMessage(), ex);
                 if (ex.getCause() instanceof IllegalArgumentException) {
                     throw new BadRequestException(ex);
-                } else if (ex.getCause() instanceof EJBAccessException) {
-                    throw new ForbiddenException(ex.getMessage());
                 }
             }
         }, () -> {
@@ -173,8 +169,8 @@ public class ResearcherRestController implements ResearcherController {
             try {
                 avatarService.deleteAvatar(researcher.getId());
             } catch (EJBException ex) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
                 if (ex.getCause() instanceof IllegalArgumentException) {
-                    log.log(Level.WARNING, ex.getMessage(), ex);
                     throw new BadRequestException(ex);
                 }
             }

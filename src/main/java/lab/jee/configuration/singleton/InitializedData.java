@@ -128,6 +128,7 @@ public class InitializedData {
             researcherService.create(madison);
             researcherService.create(mark);
 
+            avatarService.createAvatarDirectoryIfNotExists();
             avatarService.createAvatar(clayre.getId(), getResourceAsStream("clayre.png"));
             avatarService.createAvatar(jonathan.getId(), getResourceAsStream("jonathan.png"));
             avatarService.createAvatar(jason.getId(), getResourceAsStream("jason.png"));

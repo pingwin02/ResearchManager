@@ -1,10 +1,13 @@
 package lab.jee.researcher.service;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lab.jee.researcher.entity.Researcher;
+import lab.jee.researcher.entity.ResearcherRole;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +18,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
 public class ResearcherService {
 
     private final ResearcherRepository researcherRepository;
@@ -40,6 +44,7 @@ public class ResearcherService {
         return researcherRepository.findAll();
     }
 
+    @PermitAll
     public void create(Researcher researcher) {
         if (researcherRepository.findByLogin(researcher.getLogin()).isPresent()) {
             throw new IllegalArgumentException("Researcher already exists");

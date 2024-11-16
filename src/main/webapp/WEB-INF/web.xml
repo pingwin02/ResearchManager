@@ -39,6 +39,10 @@
             <web-resource-name>experiment</web-resource-name>
             <url-pattern>/experiment/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>project</web-resource-name>
+            <url-pattern>/project/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>

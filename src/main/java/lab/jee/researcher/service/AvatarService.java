@@ -2,9 +2,11 @@ package lab.jee.researcher.service;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import lab.jee.researcher.entity.ResearcherRole;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +23,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
 public class AvatarService {
 
     private final ResearcherRepository researcherRepository;
@@ -40,8 +43,6 @@ public class AvatarService {
         }
         avatarDirectory = Paths.get(System.getProperty("server.config.dir").split("target")[0],
                 "src/main/webapp/", avatarsDir);
-
-        createAvatarDirectoryIfNotExists();
     }
 
     public Optional<byte[]> getAvatar(UUID id) {
@@ -62,7 +63,7 @@ public class AvatarService {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
                 if (researcher.getAvatarPath() != null) {
-                    throw new IllegalStateException("Avatar already exists");
+                    throw new IllegalArgumentException("Avatar already exists");
                 }
 
                 String fileName = id.toString() + ".png";
@@ -82,7 +83,7 @@ public class AvatarService {
         researcherRepository.find(id).ifPresent(researcher -> {
             try {
                 if (researcher.getAvatarPath() == null) {
-                    throw new IllegalStateException("Avatar doesn't exist");
+                    throw new IllegalArgumentException("Avatar doesn't exist");
                 }
 
                 String fileName = id.toString() + ".png";
@@ -113,7 +114,7 @@ public class AvatarService {
         });
     }
 
-    private void createAvatarDirectoryIfNotExists() {
+    public void createAvatarDirectoryIfNotExists() {
         File directory = new File(avatarDirectory.toString());
         if (!directory.exists()) {
             directory.mkdirs();
