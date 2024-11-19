@@ -75,4 +75,11 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
         Project p = em.find(Project.class, project.getId());
         return p.getExperiments();
     }
+
+    @Override
+    public List<Experiment> findAllByProjectAndResearcher(Project project, Researcher researcher) {
+        Project p = em.find(Project.class, project.getId());
+        Researcher r = em.find(Researcher.class, researcher.getId());
+        return p.getExperiments().stream().filter(e -> e.getResearcher().equals(r)).toList();
+    }
 }

@@ -110,8 +110,18 @@ public class ExperimentService {
         }
     }
 
-    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
-    public Optional<List<Experiment>> findAllByProject(UUID id) {
+    public Optional<List<Experiment>> findAllByProjectForCallerPrincipal(UUID id) {
+        if (securityContext.isCallerInRole(ResearcherRole.LEAD_RESEARCHER)) {
+            return findAllByProject(id);
+        } else {
+            Researcher researcher = researcherRepository.findByLogin(securityContext.getCallerPrincipal().getName())
+                    .orElseThrow(() -> new IllegalStateException("Researcher not found"));
+            return projectRepository.find(id)
+                    .map(project -> experimentRepository.findAllByProjectAndResearcher(project, researcher));
+        }
+    }
+    
+    private Optional<List<Experiment>> findAllByProject(UUID id) {
         return projectRepository.find(id)
                 .map(experimentRepository::findAllByProject);
     }

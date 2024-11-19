@@ -53,7 +53,8 @@ public class ProjectView implements Serializable {
         Optional<Project> project = service.find(id);
         if (project.isPresent()) {
             this.project = factory.projectToModel().apply(project.get());
-            this.experiments = factory.experimentsToModel().apply(experimentService.findAllByProject(id).orElseThrow());
+            this.experiments = factory.experimentsToModel()
+                    .apply(experimentService.findAllByProjectForCallerPrincipal(id).orElseThrow());
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Project not found");
         }

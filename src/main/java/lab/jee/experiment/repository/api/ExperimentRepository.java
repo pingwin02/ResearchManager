@@ -18,4 +18,6 @@ public interface ExperimentRepository extends Repository<Experiment, UUID> {
     List<Experiment> findAllByResearcher(Researcher researcher);
 
     List<Experiment> findAllByProject(Project project);
+
+    List<Experiment> findAllByProjectAndResearcher(Project project, Researcher researcher);
 }

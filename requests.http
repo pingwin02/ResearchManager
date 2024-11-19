@@ -147,7 +147,7 @@ Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 ### Get project experiments
 // @no-cookie-jar
 GET http://localhost:9080/ResearchManager/api/projects/fe9d920d-f836-44c1-9281-dc4a080a9f0f/experiments
-Authorization: Basic Y2xheXJlOnBhc3N3b3Jk
+Authorization: Basic am9uYXRoYW46cGFzc3dvcmQ=
 
 ### Update experiment
 // @no-cookie-jar

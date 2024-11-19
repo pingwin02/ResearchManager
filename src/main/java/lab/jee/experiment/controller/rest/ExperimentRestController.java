@@ -60,10 +60,9 @@ public class ExperimentRestController implements ExperimentController {
         return factory.experimentsToResponse().apply(service.findAllForCallerPrincipal());
     }
 
-    @RolesAllowed(ResearcherRole.LEAD_RESEARCHER)
     @Override
     public GetExperimentsResponse getProjectExperiments(UUID projectId) {
-        return service.findAllByProject(projectId)
+        return service.findAllByProjectForCallerPrincipal(projectId)
                 .map(factory.experimentsToResponse())
                 .orElseThrow(NotFoundException::new);
     }
