@@ -6,6 +6,7 @@ import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
+import lab.jee.component.interceptor.binding.LogAction;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
@@ -43,6 +44,7 @@ public class ExperimentService {
         this.securityContext = securityContext;
     }
 
+    @LogAction
     public void create(Experiment experiment) {
         if (experimentRepository.find(experiment.getId()).isPresent()) {
             throw new IllegalArgumentException("Experiment already exists");
@@ -57,6 +59,7 @@ public class ExperimentService {
         experimentRepository.create(experiment);
     }
 
+    @LogAction
     public void createForCallerPrincipal(Experiment experiment) {
         Researcher researcher = researcherRepository.findByLogin(securityContext.getCallerPrincipal().getName())
                 .orElseThrow(() -> new IllegalStateException("Researcher not found"));
@@ -64,11 +67,13 @@ public class ExperimentService {
         create(experiment);
     }
 
+    @LogAction
     public void update(Experiment experiment) {
         checkAdminRoleOrOwner(find(experiment.getId()));
         experimentRepository.update(experiment);
     }
 
+    @LogAction
     public void delete(UUID id) {
         checkAdminRoleOrOwner(find(id));
         experimentRepository.delete(id);

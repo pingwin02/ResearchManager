@@ -44,7 +44,8 @@
 
                     <f:facet name="footer">
                         <h:link outcome="/project/project_create__basic.xhtml" styleClass="btn btn-primary"
-                                value="#{messages['create.new']} #{messages['project']}"/>
+                                value="#{messages['create.new']} #{messages['project']}"
+                                rendered="#{facesContext.externalContext.isUserInRole('admin')}"/>
                     </f:facet>
                 </h:dataTable>
             </h:form>
