@@ -120,7 +120,7 @@ public class ExperimentService {
                     .map(project -> experimentRepository.findAllByProjectAndResearcher(project, researcher));
         }
     }
-    
+
     private Optional<List<Experiment>> findAllByProject(UUID id) {
         return projectRepository.find(id)
                 .map(experimentRepository::findAllByProject);

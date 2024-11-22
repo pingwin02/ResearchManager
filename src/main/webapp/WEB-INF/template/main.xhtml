@@ -8,11 +8,11 @@
 <f:view>
     <h:head>
         <meta charset="UTF-8"/>
-        <meta name="description" content="Research manager"/>
+        <meta name="description" content="#{messages['header.title']}"/>
         <meta name="keywords" content="research, manager, project, experiment"/>
         <meta name="author" content="Damian Jankowski"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Research Manager</title>
+        <title>#{messages['header.title']}</title>
 
         <h:outputStylesheet library="webjars" name="mdb-ui-kit/6.4.0/css/mdb.min.css"/>
         <h:outputStylesheet library="default" name="css/main.css"/>
@@ -25,12 +25,12 @@
             <header class="mb-4 mt-4">
                 <h:graphicImage name="images/logo.jpg" library="default" alt="Logo" styleClass="me-3"
                                 style="width: 50px; float: left;"/>
-                <h1>Research Manager</h1>
+                <h1>#{messages['header.title']}</h1>
                 <h:form styleClass="container d-flex align-items-center justify-content-end"
                         rendered="#{facesContext.externalContext.userPrincipal != null}">
-                    Logged:
+                    #{messages['logged']}
                     <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
-                    <h:commandButton styleClass="btn btn-link" value="Logout"
+                    <h:commandButton styleClass="btn btn-link" value="#{messages['logout']}"
                                      action="#{researcherLogout.logoutAction()}"/>
                 </h:form>
             </header>
@@ -39,26 +39,27 @@
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <h:link styleClass="nav-link" outcome="/index.xhtml">Home</h:link>
+                            <h:link styleClass="nav-link" outcome="/index.xhtml">#{messages['home']}</h:link>
                         </li>
                         <li class="nav-item">
                             <h:link styleClass="nav-link"
-                                    outcome="/experiment/experiment_list.xhtml">Experiments
+                                    outcome="/experiment/experiment_list.xhtml">#{messages['experiments']}
                             </h:link>
                         </li>
                         <li class="nav-item">
                             <h:link styleClass="nav-link"
-                                    outcome="/project/project_list.xhtml">Projects
+                                    outcome="/project/project_list.xhtml">#{messages['projects']}
                             </h:link>
                         </li>
                         <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                             <li class="nav-item">
                                 <h:link styleClass="nav-link"
-                                        outcome="/researcher/researcher_list.xhtml">Researchers
+                                        outcome="/researcher/researcher_list.xhtml">#{messages['researchers']}
                                 </h:link>
                             </li>
                         </h:panelGroup>
                     </ul>
+                    <h:graphicImage styleClass="flag" library="default" name="img/flag.svg"/>
                 </div>
             </nav>
 
@@ -68,7 +69,7 @@
 
             <footer class="text-center text-lg-start bg-light text-muted p-1">
                 <div class="text-center">
-                    Copyright &#169; 2024, Damian Jankowski
+                    Copyright &#169; 2024 Damian Jankowski
                 </div>
             </footer>
         </div>

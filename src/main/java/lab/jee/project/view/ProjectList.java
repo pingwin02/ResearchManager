@@ -1,17 +1,18 @@
 package lab.jee.project.view;
 
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lab.jee.component.ModelFunctionFactory;
 import lab.jee.project.model.ProjectsModel;
 import lab.jee.project.service.ProjectService;
 
-@RequestScoped
+import java.io.Serializable;
+
+@ViewScoped
 @Named
-public class ProjectList {
+public class ProjectList implements Serializable {
 
     private final ModelFunctionFactory factory;
     private ProjectService service;
@@ -34,9 +35,8 @@ public class ProjectList {
         return projects;
     }
 
-    public String deleteAction(ProjectsModel.Project project) {
+    public void deleteAction(ProjectsModel.Project project) {
         service.delete(project.getId());
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+        projects = null;
     }
 }

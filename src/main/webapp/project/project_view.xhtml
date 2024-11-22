@@ -12,14 +12,14 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Project info</h2></header>
+            <header><h2>#{messages['project.info']}</h2></header>
 
             <div class="container">
                 <div class="row mb-2">
                     <div class="col-6">
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Title:</strong>
+                                <strong>#{messages['title']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectView.project.title}"/>
@@ -28,7 +28,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Budget:</strong>
+                                <strong>#{messages['budget']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectView.project.budget}"/>
@@ -37,7 +37,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Priority:</strong>
+                                <strong>#{messages['priority']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectView.project.priority}"/>
@@ -47,41 +47,41 @@
                 </div>
 
                 <header>
-                    <h3>Associated Experiments</h3>
+                    <h3>#{messages['experiments.associated']}</h3>
                 </header>
                 <h:dataTable value="#{projectView.experiments.experiments}" var="experiment"
                              styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
-                    <h:column>
-                        <f:facet name="header">Description</f:facet>
+                    <h:column styleClass="text-break">
+                        <f:facet name="header">#{messages['description']}</f:facet>
                         <h:outputText value="#{experiment.description}"/>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">View</f:facet>
-                        <h:link outcome="/experiment/experiment_view.xhtml" value="View">
+                        <f:facet name="header">#{messages['view']}</f:facet>
+                        <h:link outcome="/experiment/experiment_view.xhtml" value="#{messages['view']}">
                             <f:param name="id" value="#{experiment.id}"/>
                         </h:link>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Edit</f:facet>
-                        <h:link outcome="/experiment/experiment_edit.xhtml" value="Edit">
+                        <f:facet name="header">#{messages['edit']}</f:facet>
+                        <h:link outcome="/experiment/experiment_edit.xhtml" value="#{messages['edit']}">
                             <f:param name="id" value="#{experiment.id}"/>
                         </h:link>
                     </h:column>
 
                     <h:column>
-                        <f:facet name="header">Delete</f:facet>
+                        <f:facet name="header">#{messages['delete']}</f:facet>
                         <h:form>
-                            <h:commandButton styleClass="btn btn-danger" value="Delete"
+                            <h:commandButton styleClass="btn btn-danger" value="#{messages['delete']}"
                                              action="#{experimentList.deleteAction(experiment)}"/>
                         </h:form>
                     </h:column>
 
                     <f:facet name="footer">
                         <h:link outcome="/experiment/experiment_create__basic.xhtml" styleClass="btn btn-primary"
-                                value="Create New Experiment"/>
+                                value="#{messages['create.new']} #{messages['experiment']}"/>
                     </f:facet>
                 </h:dataTable>
             </div>

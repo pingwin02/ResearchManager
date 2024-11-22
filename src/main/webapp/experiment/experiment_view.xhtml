@@ -12,14 +12,13 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Experiment info</h2></header>
-
+            <header><h2>#{messages['experiment.info']}</h2></header>
             <div class="container">
                 <div class="row">
                     <div class="col-6">
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Description:</strong>
+                                <strong>#{messages['description']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{experimentView.experiment.description}"/>
@@ -28,7 +27,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Project Title:</strong>
+                                <strong>#{messages['project.big']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{experimentView.experiment.projectTitle}"/>
@@ -37,7 +36,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Researcher Login:</strong>
+                                <strong>#{messages['username']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{experimentView.experiment.researcherLogin}"/>
@@ -46,7 +45,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Date Conducted:</strong>
+                                <strong>#{messages['date.conducted']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{experimentView.experiment.dateConducted}"/>
@@ -55,7 +54,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <strong>Success:</strong>
+                                <strong>#{messages['success']}:</strong>
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{experimentView.experiment.success ? 'Yes' : 'No'}"/>

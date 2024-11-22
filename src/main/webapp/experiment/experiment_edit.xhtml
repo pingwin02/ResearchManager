@@ -12,48 +12,50 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Edit experiment info</h2></header>
+            <header><h2>#{messages['edit']} #{messages['experiment']}</h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-4 p-2">
+                    <div class="col-6 p-2">
                         <div class="form-outline">
                             <h:inputTextarea id="description" value="#{experimentEdit.experiment.description}"
                                              styleClass="form-control"/>
-                            <h:outputLabel for="description" value="Description:" styleClass="form-label"/>
+                            <h:outputLabel for="description" value="#{messages['description']}:"
+                                           styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4 p-2">
+                    <div class="col-6 p-2">
                         <div class="form-outline">
-                            <h:outputLabel for="success" value="Success:" styleClass="form-label"/>
+                            <h:outputLabel for="success" value="#{messages['success']}:" styleClass="form-label"/>
                             <h:selectOneRadio id="success" value="#{experimentEdit.experiment.success}"
                                               layout="pageDirection">
-                                <f:selectItem itemLabel="Yes" itemValue="true"/>
-                                <f:selectItem itemLabel="No" itemValue="false"/>
+                                <f:selectItem itemLabel="#{messages['yes']}" itemValue="true"/>
+                                <f:selectItem itemLabel="#{messages['no']}" itemValue="false"/>
                             </h:selectOneRadio>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4 p-2">
+                    <div class="col-6 p-2">
                         <div class="form-outline">
                             <h:inputText id="dateConducted" value="#{experimentEdit.experiment.dateConducted}"
                                          styleClass="form-control" type="date"/>
-                            <h:outputLabel for="dateConducted" value="Date Conducted:" styleClass="form-label"/>
+                            <h:outputLabel for="dateConducted" value="#{messages['date.conducted']}:"
+                                           styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Update"
+                    <div class="col-3 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="#{messages['update']}"
                                          action="#{experimentEdit.saveAction()}"/>
                     </div>
-                    <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                    <div class="col-3 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" type="reset" value="#{messages['reset']}"/>
                     </div>
                 </div>
             </h:form>

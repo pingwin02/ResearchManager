@@ -1,17 +1,18 @@
 package lab.jee.experiment.view;
 
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lab.jee.component.ModelFunctionFactory;
 import lab.jee.experiment.model.ExperimentsModel;
 import lab.jee.experiment.service.ExperimentService;
 
-@RequestScoped
+import java.io.Serializable;
+
+@ViewScoped
 @Named
-public class ExperimentList {
+public class ExperimentList implements Serializable {
 
     private final ModelFunctionFactory factory;
     private ExperimentService service;
@@ -34,9 +35,8 @@ public class ExperimentList {
         return experiments;
     }
 
-    public String deleteAction(ExperimentsModel.Experiment experiment) {
+    public void deleteAction(ExperimentsModel.Experiment experiment) {
         service.delete(experiment.getId());
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+        experiments = null;
     }
 }

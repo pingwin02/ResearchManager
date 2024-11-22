@@ -6,45 +6,48 @@
                 template="/WEB-INF/template/main.xhtml">
 
     <ui:define name="content">
-
         <article class="text--justified">
-            <header><h2>Projects</h2></header>
+            <header><h2>#{messages['projects']}</h2></header>
 
-            <h:dataTable value="#{projectList.projects.projects}" var="project"
-                         styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+            <h:form id="projectForm">
+                <h:dataTable id="projectTable" value="#{projectList.projects.projects}" var="project"
+                             styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
-                <h:column>
-                    <f:facet name="header">Title</f:facet>
-                    <h:outputText value="#{project.title}"/>
-                </h:column>
+                    <h:column styleClass="text-break">
+                        <f:facet name="header">#{messages['title']}</f:facet>
+                        <h:outputText value="#{project.title}"/>
+                    </h:column>
 
-                <h:column>
-                    <f:facet name="header">View</f:facet>
-                    <h:link outcome="/project/project_view.xhtml" value="View">
-                        <f:param name="id" value="#{project.id}"/>
-                    </h:link>
-                </h:column>
+                    <h:column>
+                        <f:facet name="header">#{messages['view']}</f:facet>
+                        <h:link outcome="/project/project_view.xhtml" value="#{messages['view']}">
+                            <f:param name="id" value="#{project.id}"/>
+                        </h:link>
+                    </h:column>
 
-                <h:column>
-                    <f:facet name="header">Edit</f:facet>
-                    <h:link outcome="/project/project_edit.xhtml" value="Edit">
-                        <f:param name="id" value="#{project.id}"/>
-                    </h:link>
-                </h:column>
+                    <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                        <f:facet name="header">#{messages['edit']}</f:facet>
+                        <h:link outcome="/project/project_edit.xhtml" value="#{messages['edit']}">
+                            <f:param name="id" value="#{project.id}"/>
+                        </h:link>
+                    </h:column>
 
-                <h:column>
-                    <f:facet name="header">Delete</f:facet>
-                    <h:form>
-                        <h:commandButton styleClass="btn btn-danger" value="Delete"
-                                         action="#{projectList.deleteAction(project)}"/>
-                    </h:form>
-                </h:column>
+                    <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                        <f:facet name="header">#{messages['delete']}</f:facet>
+                        <h:form>
+                            <h:commandButton styleClass="btn btn-danger" value="#{messages['delete']}"
+                                             action="#{projectList.deleteAction(project)}">
+                                <f:ajax execute="@this" render=":projectForm:projectTable"/>
+                            </h:commandButton>
+                        </h:form>
+                    </h:column>
 
-                <f:facet name="footer">
-                    <h:link outcome="/project/project_create__basic.xhtml" styleClass="btn btn-primary"
-                            value="Create New Project"/>
-                </f:facet>
-            </h:dataTable>
+                    <f:facet name="footer">
+                        <h:link outcome="/project/project_create__basic.xhtml" styleClass="btn btn-primary"
+                                value="#{messages['create.new']} #{messages['project']}"/>
+                    </f:facet>
+                </h:dataTable>
+            </h:form>
         </article>
     </ui:define>
 

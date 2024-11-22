@@ -11,24 +11,24 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Create Project - Confirm Information</h2></header>
+            <header><h2>#{messages['create']} #{messages['project']} - #{messages['create.confirm.info']}</h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
 
                 <div class="row">
-                    <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn" value="Previous" immediate="true"
+                    <div class="col-3 p-2 text-center">
+                        <h:commandButton styleClass="btn" value="#{messages['previous']}" immediate="true"
                                          action="#{projectCreate.goToBasicAction()}"/>
                     </div>
-                    <div class="col-2 p-2 text-center">
-                        <h:button styleClass="btn" value="Next" disabled="true"/>
+                    <div class="col-3 p-2 text-center">
+                        <h:button styleClass="btn" value="#{messages['next']}" disabled="true"/>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row mb-2">
                             <div class="col-6">
-                                Title
+                                #{messages['title']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectCreate.project.title}"/>
@@ -37,7 +37,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                Budget
+                                #{messages['budget']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectCreate.project.budget}"/>
@@ -46,7 +46,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                Priority
+                                #{messages['priority']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{projectCreate.project.priority}"/>
@@ -56,12 +56,12 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Confirm"
+                    <div class="col-3 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-primary" value="#{messages['create']}"
                                          action="#{projectCreate.saveAction()}"/>
                     </div>
-                    <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" value="Cancel"
+                    <div class="col-3 p-2 text-center">
+                        <h:commandButton styleClass="btn btn-secondary" value="#{messages['cancel']}"
                                          action="#{projectCreate.cancelAction()}"/>
                     </div>
                 </div>

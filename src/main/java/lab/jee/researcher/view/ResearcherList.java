@@ -1,17 +1,18 @@
 package lab.jee.researcher.view;
 
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lab.jee.component.ModelFunctionFactory;
 import lab.jee.researcher.model.ResearchersModel;
 import lab.jee.researcher.service.ResearcherService;
 
-@RequestScoped
+import java.io.Serializable;
+
+@ViewScoped
 @Named
-public class ResearcherList {
+public class ResearcherList implements Serializable {
 
     private final ModelFunctionFactory factory;
     private ResearcherService service;
@@ -34,9 +35,8 @@ public class ResearcherList {
         return researchers;
     }
 
-    public String deleteAction(ResearchersModel.Researcher researcher) {
+    public void deleteAction(ResearchersModel.Researcher researcher) {
         service.delete(researcher.getId());
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+        researchers = null;
     }
 }
