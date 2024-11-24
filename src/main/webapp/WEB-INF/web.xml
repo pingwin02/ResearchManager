@@ -5,10 +5,11 @@
          version="6.0"
          metadata-complete="false">
 
-    <context-param>
-        <param-name>avatarDir</param-name>
-        <param-value>avatars</param-value>
-    </context-param>
+    <env-entry>
+        <env-entry-name>avatarsDir</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>avatars</env-entry-value>
+    </env-entry>
 
     <context-param>
         <param-name>jakarta.faces.FACELETS_SKIP_COMMENTS</param-name>
@@ -18,6 +19,11 @@
     <context-param>
         <param-name>jakarta.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
+        <param-value>true</param-value>
     </context-param>
 
     <servlet>
@@ -43,6 +49,10 @@
             <web-resource-name>project</web-resource-name>
             <url-pattern>/project/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>chat</web-resource-name>
+            <url-pattern>/chat/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
@@ -65,4 +75,19 @@
     <security-role>
         <role-name>user</role-name>
     </security-role>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/error/401.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/403.xhtml</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.xhtml</location>
+    </error-page>
 </web-app>

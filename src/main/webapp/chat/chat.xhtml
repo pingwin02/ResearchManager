@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:f="jakarta.faces.core"
+        xmlns="http://www.w3.org/1999/xhtml"
+        template="/WEB-INF/template/main.xhtml">
+
+    <ui:define name="content">
+        <h:outputScript library="chat" name="js/message.js" target="head"/>
+        <h:outputStylesheet library="chat" name="css/chat.css"/>
+
+        <f:websocket channel="broadcast" scope="application" onmessage="receive"/>
+        <f:websocket rendered="#{facesContext.externalContext.userPrincipal != null}" channel="user"
+                     user="#{facesContext.externalContext.userPrincipal.name}" onmessage="receive"/>
+
+        <h:form id="form" styleClass="container mt-4">
+            <div class="row">
+                <div class="col-6 p-2">
+                    <fieldset>
+                        <legend class="form-label fs-6">#{messages['recipient']}:</legend>
+                        <h:selectOneMenu id="recipientSelect" value="#{chatView.recipient}" styleClass="form-select">
+                            <f:selectItem itemLabel="#{messages['all']}" itemValue=""/>
+                            <f:selectItems value="#{chatView.researchers.researchers}" var="researcher"
+                                           itemLabel="#{researcher.login}" itemValue="#{researcher.login}"/>
+                        </h:selectOneMenu>
+                    </fieldset>
+                </div>
+
+                <div class="col-6 p-2">
+                    <fieldset>
+                        <legend class="form-label fs-6">#{messages['message']}:</legend>
+                        <h:inputTextarea id="message-input" value="#{chatView.messageContent}"
+                                         styleClass="form-control"/>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center p-3">
+                    <h:commandButton id="send-button" styleClass="btn btn-primary" value="#{messages['send']}"
+                                     action="#{chatView.sendAction}" ajax="true">
+                        <f:ajax execute="@form"/>
+                    </h:commandButton>
+                </div>
+            </div>
+        </h:form>
+
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="card">
+                    <div class="card-header text-center bg-primary text-white">
+                        #{messages['chat']}
+                    </div>
+                    <div class="card-body" id="message-container" style="max-height: 500px; overflow-y: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

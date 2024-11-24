@@ -32,14 +32,17 @@ public class ResearcherService {
         this.passwordHash = passwordHash;
     }
 
+    @RolesAllowed(ResearcherRole.ASSISTANT)
     public Optional<Researcher> find(UUID id) {
         return researcherRepository.find(id);
     }
 
+    @RolesAllowed(ResearcherRole.ASSISTANT)
     public Optional<Researcher> find(String login) {
         return researcherRepository.findByLogin(login);
     }
 
+    @RolesAllowed(ResearcherRole.ASSISTANT)
     public List<Researcher> findAll() {
         return researcherRepository.findAll();
     }

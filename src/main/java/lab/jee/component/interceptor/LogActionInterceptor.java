@@ -43,7 +43,7 @@ public class LogActionInterceptor {
         }
 
         String logMessage = String.format("User %s invoked method %s() with resource id %s", username, methodName, resourceId);
-        log.info(logMessage);
+        log.warning(logMessage);
 
         return context.proceed();
     }

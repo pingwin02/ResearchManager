@@ -59,11 +59,13 @@ public class ResearcherRestController implements ResearcherController {
     }
 
     @Override
+    @RolesAllowed(ResearcherRole.ASSISTANT)
     public GetResearcherResponse getResearcher(UUID id) {
         return service.find(id).map(factory.researcherToResponse()).orElseThrow(NotFoundException::new);
     }
 
     @Override
+    @RolesAllowed(ResearcherRole.ASSISTANT)
     public GetResearchersResponse getResearchers() {
         return factory.researchersToResponse().apply(service.findAll());
     }
