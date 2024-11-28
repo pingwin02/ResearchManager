@@ -2,6 +2,7 @@ package lab.jee.experiment.model;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +30,12 @@ public class ExperimentsModel {
         private UUID id;
 
         private String description;
+
+        private Long version;
+
+        private LocalDateTime creationDateTime;
+
+        private LocalDateTime modificationDateTime;
 
     }
 }

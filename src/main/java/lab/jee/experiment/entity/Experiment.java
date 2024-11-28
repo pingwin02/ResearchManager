@@ -1,9 +1,11 @@
 package lab.jee.experiment.entity;
 
 import jakarta.persistence.*;
+import lab.jee.entity.VersionAndCreationDateAuditable;
 import lab.jee.project.entity.Project;
 import lab.jee.researcher.entity.Researcher;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,13 +14,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
-@Builder
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
 @Table(name = "experiments")
-public class Experiment implements Serializable {
+public class Experiment extends VersionAndCreationDateAuditable implements Serializable {
 
     @Id
     private UUID id;

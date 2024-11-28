@@ -26,6 +26,8 @@ public class GetExperimentResponse {
 
     private Researcher researcher;
 
+    private Long version;
+
     @Getter
     @Setter
     @ToString

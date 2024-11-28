@@ -5,6 +5,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
@@ -103,6 +104,10 @@ public class ExperimentRestController implements ExperimentController {
                     } catch (EJBAccessException ex) {
                         log.log(Level.WARNING, ex.getMessage(), ex);
                         throw new ForbiddenException(ex.getMessage());
+                    } catch (EJBException ex) {
+                        if (ex.getCause() instanceof OptimisticLockException) {
+                            throw new BadRequestException(ex.getCause());
+                        }
                     }
                 },
                 () -> {

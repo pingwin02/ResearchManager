@@ -13,14 +13,23 @@
     <ui:define name="content">
         <article>
             <header><h2>#{messages['edit']} #{messages['experiment']}</h2></header>
-            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
+            <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data" id="form">
+
+                <div class="row">
+                    <div class="col-6 p-2">
+                        <h:messages/>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-6 p-2">
                         <div class="form-outline">
-                            <h:inputTextarea id="description" value="#{experimentEdit.experiment.description}"
-                                             styleClass="form-control"/>
+                            <h:inputTextarea id="description" value="#{experimentEditModel.description}"
+                                             required="true" binding="#{descriptionInput}"
+                                             styleClass="#{descriptionInput.valid ? 'form-control' : 'form-control is-invalid'}"/>
                             <h:outputLabel for="description" value="#{messages['description']}:"
                                            styleClass="form-label"/>
+                            <h:message for="description" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -29,11 +38,13 @@
                     <div class="col-6 p-2">
                         <div class="form-outline">
                             <h:outputLabel for="success" value="#{messages['success']}:" styleClass="form-label"/>
-                            <h:selectOneRadio id="success" value="#{experimentEdit.experiment.success}"
-                                              layout="pageDirection">
+                            <h:selectOneRadio id="success" value="#{experimentEditModel.success}"
+                                              layout="pageDirection" binding="#{successInput}"
+                                              styleClass="#{successInput.valid ? '' : 'is-invalid'}">
                                 <f:selectItem itemLabel="#{messages['yes']}" itemValue="true"/>
                                 <f:selectItem itemLabel="#{messages['no']}" itemValue="false"/>
                             </h:selectOneRadio>
+                            <h:message for="success" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -41,10 +52,17 @@
                 <div class="row">
                     <div class="col-6 p-2">
                         <div class="form-outline">
-                            <h:inputText id="dateConducted" value="#{experimentEdit.experiment.dateConducted}"
-                                         styleClass="form-control" type="date"/>
+                            <h:inputText id="dateConducted" value="#{experimentEditModel.dateConducted}"
+                                         type="date" required="true" binding="#{dateConductedInput}"
+                                         styleClass="#{dateConductedInput.valid ? 'form-control' : 'form-control is-invalid'}">
+                                <f:validateBean
+                                        validationGroups="
+                                        lab.jee.experiment.validation.group.ExperimentModelGroup, 
+                                        jakarta.validation.groups.Default"/>
+                            </h:inputText>
                             <h:outputLabel for="dateConducted" value="#{messages['date.conducted']}:"
                                            styleClass="form-label"/>
+                            <h:message for="dateConducted" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -58,6 +76,10 @@
                         <h:commandButton styleClass="btn btn-secondary" type="reset" value="#{messages['reset']}"/>
                     </div>
                 </div>
+
+                <f:validateWholeBean id="experiment" value="#{experimentEditModel}"
+                                     validationGroups="lab.jee.experiment.validation.group.ExperimentModelGroup"/>
+
             </h:form>
         </article>
     </ui:define>

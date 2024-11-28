@@ -15,6 +15,9 @@ public class ExperimentsToModelFunction implements Function<List<Experiment>, Ex
                         .map(experiment -> ExperimentsModel.Experiment.builder()
                                 .id(experiment.getId())
                                 .description(experiment.getDescription())
+                                .version(experiment.getVersion())
+                                .creationDateTime(experiment.getCreationDateTime())
+                                .modificationDateTime(experiment.getModificationDateTime())
                                 .build())
                         .toList())
                 .build();

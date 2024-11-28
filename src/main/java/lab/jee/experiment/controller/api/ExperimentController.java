@@ -1,5 +1,6 @@
 package lab.jee.experiment.controller.api;
 
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lab.jee.experiment.dto.GetExperimentResponse;
@@ -38,7 +39,7 @@ public interface ExperimentController {
     void createExperiment(
             @PathParam("projectId") UUID projectId,
             @PathParam("experimentId") UUID experimentId,
-            PutExperimentRequest request
+            @Valid PutExperimentRequest request
     );
 
     @PATCH

@@ -14,6 +14,7 @@ public class ExperimentToResponseFunction implements Function<Experiment, GetExp
                 .description(e.getDescription())
                 .success(e.isSuccess())
                 .dateConducted(e.getDateConducted())
+                .version(e.getVersion())
                 .project(GetExperimentResponse.Project.builder()
                         .id(e.getProject().getId())
                         .title(e.getProject().getTitle())

@@ -21,7 +21,7 @@ public class ExperimentToEditModelFunction implements Function<Experiment, Exper
                 .description(e.getDescription())
                 .success(e.isSuccess())
                 .dateConducted(e.getDateConducted())
-                .researcher(function.apply(e.getResearcher()))
+                .version(e.getVersion())
                 .build();
     }
 }

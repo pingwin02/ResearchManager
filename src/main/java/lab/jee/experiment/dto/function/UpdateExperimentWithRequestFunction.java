@@ -16,6 +16,9 @@ public class UpdateExperimentWithRequestFunction implements BiFunction<Experimen
                 .dateConducted(r.getDateConducted() != null ? r.getDateConducted() : e.getDateConducted())
                 .project(e.getProject())
                 .researcher(e.getResearcher())
+                .version(r.getVersion())
+                .creationDateTime(e.getCreationDateTime())
+                .modificationDateTime(e.getModificationDateTime())
                 .build();
     }
 }

@@ -25,20 +25,21 @@ public class ExperimentCreate implements Serializable {
 
     private final ModelFunctionFactory factory;
     private final Conversation conversation;
+    @Getter
+    private final ExperimentCreateModel experiment;
     private ExperimentService experimentService;
     private ProjectService projectService;
     private ResearcherService researcherService;
-    @Getter
-    private ExperimentCreateModel experiment;
-
     @Getter
     private List<ProjectModel> projects;
 
     @Inject
     public ExperimentCreate(ModelFunctionFactory factory,
-                            Conversation conversation) {
+                            Conversation conversation,
+                            ExperimentCreateModel experiment) {
         this.factory = factory;
         this.conversation = conversation;
+        this.experiment = experiment;
     }
 
     @EJB
@@ -56,14 +57,12 @@ public class ExperimentCreate implements Serializable {
         this.researcherService = researcherService;
     }
 
-    public void init() {
+    public void init() throws Exception {
         if (conversation.isTransient()) {
             projects = projectService.findAll().stream()
                     .map(factory.projectToModel()::apply)
                     .toList();
-            experiment = ExperimentCreateModel.builder()
-                    .id(UUID.randomUUID())
-                    .build();
+            experiment.setId(UUID.randomUUID());
             conversation.begin();
         }
     }

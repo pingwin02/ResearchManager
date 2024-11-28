@@ -19,8 +19,11 @@ public class UpdateExperimentWithModelFunction implements BiFunction<Experiment,
                 .dateConducted(m.getDateConducted())
                 .project(e.getProject())
                 .researcher(Researcher.builder()
-                        .id(m.getResearcher()
+                        .id(e.getResearcher()
                                 .getId()).build())
+                .version(m.getVersion())
+                .creationDateTime(e.getCreationDateTime())
+                .modificationDateTime(e.getModificationDateTime())
                 .build();
     }
 }

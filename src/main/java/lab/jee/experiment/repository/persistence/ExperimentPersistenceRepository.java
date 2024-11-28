@@ -3,6 +3,9 @@ package lab.jee.experiment.repository.persistence;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
@@ -29,11 +32,18 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
 
     @Override
     public List<Experiment> findAll() {
-        return em.createQuery("SELECT e FROM Experiment e", Experiment.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Experiment> query = cb.createQuery(Experiment.class);
+        Root<Experiment> root = query.from(Experiment.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public void create(Experiment entity) {
+        if (!em.isJoinedToTransaction()) {
+            em.joinTransaction();
+        }
         em.persist(entity);
         em.refresh(em.find(Project.class, entity.getProject().getId()));
         em.refresh(em.find(Researcher.class, entity.getResearcher().getId()));
@@ -41,11 +51,22 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
 
     @Override
     public void update(Experiment entity) {
+        if (!em.isJoinedToTransaction()) {
+            em.joinTransaction();
+        }
         em.merge(entity);
     }
 
     @Override
+    public void detach(Experiment entity) {
+        em.detach(entity);
+    }
+
+    @Override
     public void delete(UUID id) {
+        if (!em.isJoinedToTransaction()) {
+            em.joinTransaction();
+        }
         Experiment e = em.find(Experiment.class, id);
         em.remove(e);
         em.refresh(em.find(Project.class, e.getProject().getId()));

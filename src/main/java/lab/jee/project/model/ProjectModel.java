@@ -2,6 +2,7 @@ package lab.jee.project.model;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class ProjectModel {
+public class ProjectModel implements Serializable {
 
     private UUID id;
 

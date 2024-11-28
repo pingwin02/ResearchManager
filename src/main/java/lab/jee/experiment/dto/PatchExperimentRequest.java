@@ -18,4 +18,6 @@ public class PatchExperimentRequest {
     private boolean success;
 
     private LocalDate dateConducted;
+
+    private Long version;
 }
