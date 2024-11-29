@@ -81,7 +81,6 @@ public class ExperimentEdit implements Serializable {
             return viewId + "?faces-redirect=true&includeViewParams=true";
         } catch (EJBException ex) {
             if (ex.getCause() instanceof OptimisticLockException) {
-                init();
                 facesContext.addMessage(null, new FacesMessage("Version conflict"));
             }
             return null;

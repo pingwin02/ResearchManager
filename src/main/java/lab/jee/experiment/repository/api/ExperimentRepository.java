@@ -5,6 +5,7 @@ import lab.jee.project.entity.Project;
 import lab.jee.repository.api.Repository;
 import lab.jee.researcher.entity.Researcher;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,4 +21,7 @@ public interface ExperimentRepository extends Repository<Experiment, UUID> {
     List<Experiment> findAllByProject(Project project);
 
     List<Experiment> findAllByProjectAndResearcher(Project project, Researcher researcher);
+
+    List<Experiment> findByFilters(String description, Boolean success, LocalDate dateConducted);
+
 }

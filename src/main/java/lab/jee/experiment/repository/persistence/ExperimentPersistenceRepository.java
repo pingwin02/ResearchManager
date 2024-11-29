@@ -5,12 +5,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lab.jee.experiment.entity.Experiment;
 import lab.jee.experiment.repository.api.ExperimentRepository;
 import lab.jee.project.entity.Project;
 import lab.jee.researcher.entity.Researcher;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -103,4 +106,30 @@ public class ExperimentPersistenceRepository implements ExperimentRepository {
         Researcher r = em.find(Researcher.class, researcher.getId());
         return p.getExperiments().stream().filter(e -> e.getResearcher().equals(r)).toList();
     }
+
+    @Override
+    public List<Experiment> findByFilters(String description, Boolean success, LocalDate dateConducted) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Experiment> query = cb.createQuery(Experiment.class);
+        Root<Experiment> root = query.from(Experiment.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (description != null && !description.isBlank()) {
+            predicates.add(cb.like(cb.lower(root.get("description")), "%" + description.toLowerCase() + "%"));
+        }
+
+        if (success != null) {
+            predicates.add(cb.equal(root.get("success"), success));
+        }
+
+        if (dateConducted != null) {
+            predicates.add(cb.equal(root.get("dateConducted"), dateConducted));
+        }
+
+        query.where(cb.and(predicates.toArray(new Predicate[0])));
+
+        return em.createQuery(query).getResultList();
+    }
+
 }

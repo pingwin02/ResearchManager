@@ -16,6 +16,7 @@ import lab.jee.researcher.entity.ResearcherRole;
 import lab.jee.researcher.repository.api.ResearcherRepository;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -136,6 +137,16 @@ public class ExperimentService {
         return researcherRepository.find(id)
                 .map(experimentRepository::findAllByResearcher);
     }
+
+    public List<Experiment> findByFilters(String description, Boolean success, LocalDate dateConducted) {
+        return experimentRepository.findByFilters(description, success, dateConducted).stream().filter(e -> {
+            if (securityContext.isCallerInRole(ResearcherRole.LEAD_RESEARCHER)) {
+                return true;
+            }
+            return e.getResearcher().getLogin().equals(securityContext.getCallerPrincipal().getName());
+        }).toList();
+    }
+
 
     private void checkAdminRoleOrOwner(Optional<Experiment> experiment) throws EJBAccessException {
         if (securityContext.isCallerInRole(ResearcherRole.LEAD_RESEARCHER)) {

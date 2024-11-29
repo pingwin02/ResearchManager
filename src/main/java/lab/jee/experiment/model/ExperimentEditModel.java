@@ -1,6 +1,6 @@
 package lab.jee.experiment.model;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ValidExperimentDate(groups = ExperimentModelGroup.class)
 @Named
-@RequestScoped
+@ViewScoped
 public class ExperimentEditModel implements DateHolder, Serializable {
 
     @NotBlank
